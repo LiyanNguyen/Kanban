@@ -1,15 +1,17 @@
-import React from 'react'
+import Board from "./components/Board"
+import Sidebar from "./components/Sidebar"
+import Topbar from "./components/Topbar"
+import { Stack } from '@mui/material';
 
-type Props = {
-  name: string
-  lastName: string
-  age: number
-}
-
-const App = (props: Props) => {
-  const {age = 25, lastName} = props
+const App = () => {
   return (
-    <div>App {age}</div>
+    <Stack flexDirection='row' height='100vh'>
+      <Sidebar/>
+      <Stack width='100%'>
+        <Topbar/>
+        <Board/>
+      </Stack>
+    </Stack>
   )
 }
 
