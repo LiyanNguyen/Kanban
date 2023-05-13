@@ -1,9 +1,16 @@
 import { Stack } from '@mui/material';
+import EmptyBoard from './EmptyBoard';
+interface Props {
+	columns?: string []
+}
 
-const Board = () => {
+
+const Board = (props: Props) => {
+	const { columns } = props
+
 	return (
 		<Stack bgcolor='#F4F7FD' width='100%' height='100%'>
-
+			{columns ?? <EmptyBoard/>}
 		</Stack>
 	)
 }
