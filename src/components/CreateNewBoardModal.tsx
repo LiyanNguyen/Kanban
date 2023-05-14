@@ -2,6 +2,7 @@ import { Modal, TextField, Typography, Stack, Button } from '@mui/material'
 import { Dispatch, SetStateAction, useState } from 'react'
 
 type Props = {
+  setBoards: Dispatch<SetStateAction<string[]>>
   openModal: boolean
   setOpenModal: Dispatch<SetStateAction<boolean>>
 }
@@ -17,11 +18,17 @@ const style = {
 };
 
 const CreateNewBoardModal = (props: Props) => {
-  const { openModal, setOpenModal } = props
+  const { setBoards, openModal, setOpenModal } = props
   const [name, setName] = useState<string>('');
+  const [error, setError] = useState<boolean>(false)
 
   const addNewBoard = () => {
-    alert(name)
+    if (name === '') setError(true)
+    else {
+      setBoards(prev => prev.concat(name))
+      setOpenModal(false)
+      setName('')
+    }
   }
   
   return (
@@ -29,10 +36,13 @@ const CreateNewBoardModal = (props: Props) => {
       <Stack sx={style} p={4} gap={2}>
         <Typography variant="h6" fontWeight='bold'>Add New Board</Typography>
         <TextField
+          error={error}
           fullWidth label="Name" variant="outlined" value={name}
           onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
             setName(event.target.value);
+            setError(false)
           }}
+          helperText={error && 'Cannot be empty'}
         />
         <Button
           onClick={addNewBoard}

@@ -16,8 +16,9 @@ const App = () => {
     <Stack flexDirection='row' height='100vh'>
       <Sidebar
         boards={boards}
-        setSelectedBoardIndex={setSelectedBoardIndex}
+        setBoards={setBoards}
         selectedBoardIndex={selectedBoardIndex}
+        setSelectedBoardIndex={setSelectedBoardIndex}
       />
       <Stack width='100%'>
         <Topbar boardName={boards[selectedBoardIndex]} />

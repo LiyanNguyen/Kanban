@@ -1,20 +1,21 @@
 import React, { Dispatch, SetStateAction, useState } from 'react'
-import { Stack, Box, ListItemButton, ListItemText, List, Button, Collapse } from '@mui/material';
+import { Stack, Box, ListItemButton, ListItemText, List, Button, Typography } from '@mui/material';
 import logo from '../assets/logo-dark.svg'
 import CreateNewBoardModal from './CreateNewBoardModal';
-import ExpandLess from '@mui/icons-material/ExpandLess';
-import ExpandMore from '@mui/icons-material/ExpandMore';
+import PerfectScrollbar from 'react-perfect-scrollbar'
+import 'react-perfect-scrollbar/dist/css/styles.css';
+import AddIcon from '@mui/icons-material/Add';
 
 interface Props {
   boards: string[]
+  setBoards: Dispatch<SetStateAction<string[]>>
   setSelectedBoardIndex: Dispatch<SetStateAction<number>>
   selectedBoardIndex: number
 }
 
 const Sidebar = (props: Props) => {
-  const { boards, setSelectedBoardIndex, selectedBoardIndex } = props
+  const { boards, setBoards, setSelectedBoardIndex, selectedBoardIndex } = props
   const [openModal, setOpenModal] = useState<boolean>(false);
-  const [open, setOpen] = useState<boolean>(true);
 
   return (
     <React.Fragment>
@@ -23,11 +24,11 @@ const Sidebar = (props: Props) => {
           <img src={logo} alt="logo" width={152} height={25} />
         </Box>
         <Stack px={4}>
-          <Button onClick={() => setOpenModal(true)} variant='outlined' sx={{ textTransform: 'none' }}> + Add New Board</Button>
-          <Button sx={{mt: 2, justifyContent: 'space-between', color: 'gray'}} onClick={() => setOpen(prev => !prev)} endIcon={open ? <ExpandLess /> : <ExpandMore />}>
+          <Button onClick={() => setOpenModal(true)} variant='outlined' sx={{ textTransform: 'none', gap: 1 }}><AddIcon fontSize='small'/>Add New Board</Button>
+          <Typography color='gray' variant='subtitle2' textTransform='uppercase' mt={2}>
            All Boards ({boards.length})
-          </Button>
-          <Collapse in={open} timeout="auto" unmountOnExit>
+          </Typography>
+          <PerfectScrollbar style={{ maxHeight: 550 }}>
             <List>
               {boards.map((item, index) =>
                 <ListItemButton selected={index === selectedBoardIndex} onClick={() => setSelectedBoardIndex(index)}>
@@ -35,10 +36,10 @@ const Sidebar = (props: Props) => {
                 </ListItemButton>
               )}
             </List>
-          </Collapse>
+          </PerfectScrollbar>
         </Stack>
       </Stack>
-      <CreateNewBoardModal openModal={openModal} setOpenModal={setOpenModal} />
+      <CreateNewBoardModal openModal={openModal} setOpenModal={setOpenModal} setBoards={setBoards} />
     </React.Fragment>
   )
 }
