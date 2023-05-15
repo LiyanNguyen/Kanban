@@ -4,7 +4,8 @@ import { useState } from 'react';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import AddTaskIcon from '@mui/icons-material/AddTask';
-
+import CreateNewTaskModal from './CreateNewTaskModal';
+import React from 'react';
 
 interface Props {
   boardName: string
@@ -12,7 +13,7 @@ interface Props {
 
 const Topbar = (props: Props) => {
   const { boardName } = props
-
+  const [openModal, setOpenModal] = useState<boolean>(false);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const openMenu = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -23,25 +24,28 @@ const Topbar = (props: Props) => {
   };
 
   return (
-    <Stack direction='row' alignItems='center' px={4} height={97} bgcolor='white' borderBottom={'1px solid #E4EBFA'} justifyContent='space-between'>
-      <Typography variant='h6' fontWeight='bold'>{boardName}</Typography>
-      <Box>
-        <Button variant='outlined' sx={{ textTransform: 'none', gap: 1 }}><AddTaskIcon fontSize='small'/> Add New Task</Button>
-        <IconButton onClick={handleClick}>
-          <MoreVertIcon sx={{ cursor: 'pointer', fontSize: 20, color: 'gray' }} />
-        </IconButton>
-        <Menu anchorEl={anchorEl} open={openMenu} onClose={handleClose}>
-          <MenuItem onClick={handleClose} sx={{ display: 'flex', alignItems:'center', gap : 1}}>
-            <EditIcon sx={{color:'gray', fontSize: 18}} />
-            <Typography variant='body1' color='gray'>Edit</Typography>
-          </MenuItem>
-          <MenuItem onClick={handleClose} sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-            <DeleteOutlineIcon sx={{ color: 'red', fontSize: 18 }} />
-            <Typography variant='body1' color='red'>Delete</Typography>
-          </MenuItem>
-        </Menu>
-      </Box>
-    </Stack>
+    <React.Fragment>
+      <Stack direction='row' alignItems='center' px={4} height={97} bgcolor='white' borderBottom={'1px solid #E4EBFA'} justifyContent='space-between'>
+        <Typography variant='h6' fontWeight='bold'>{boardName}</Typography>
+        <Box>
+          <Button onClick={() => setOpenModal(true)} variant='outlined' sx={{ textTransform: 'none', gap: 1 }}><AddTaskIcon fontSize='small'/> Add New Task</Button>
+          <IconButton onClick={handleClick}>
+            <MoreVertIcon sx={{ cursor: 'pointer', fontSize: 20, color: 'gray' }} />
+          </IconButton>
+          <Menu anchorEl={anchorEl} open={openMenu} onClose={handleClose}>
+            <MenuItem onClick={handleClose} sx={{ display: 'flex', alignItems:'center', gap : 1}}>
+              <EditIcon sx={{color:'gray', fontSize: 18}} />
+              <Typography variant='body1' color='gray'>Edit</Typography>
+            </MenuItem>
+            <MenuItem onClick={handleClose} sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+              <DeleteOutlineIcon sx={{ color: 'red', fontSize: 18 }} />
+              <Typography variant='body1' color='red'>Delete</Typography>
+            </MenuItem>
+          </Menu>
+        </Box>
+      </Stack>
+      <CreateNewTaskModal openModal={openModal} setOpenModal={setOpenModal} />
+    </React.Fragment>
   )
 }
 

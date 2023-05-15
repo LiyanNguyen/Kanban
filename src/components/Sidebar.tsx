@@ -19,7 +19,7 @@ const Sidebar = (props: Props) => {
 
   return (
     <React.Fragment>
-      <Stack width={300} bgcolor='white' height='100%' borderRight={'1px solid #E4EBFA'}>
+      <Stack width={300} display={['none','flex','flex']} bgcolor='white' height='100%' borderRight={'1px solid #E4EBFA'}>
         <Box p={4}>
           <img src={logo} alt="logo" width={152} height={25} />
         </Box>
