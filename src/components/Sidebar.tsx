@@ -31,7 +31,7 @@ const Sidebar = (props: Props) => {
           <PerfectScrollbar style={{ maxHeight: 550 }}>
             <List>
               {boards.map((item, index) =>
-                <ListItemButton selected={index === selectedBoardIndex} onClick={() => setSelectedBoardIndex(index)}>
+                <ListItemButton key={index} selected={index === selectedBoardIndex} onClick={() => setSelectedBoardIndex(index)}>
                   <ListItemText primary={item} />
                 </ListItemButton>
               )}
