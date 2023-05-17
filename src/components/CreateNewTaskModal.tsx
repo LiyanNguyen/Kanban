@@ -1,7 +1,8 @@
-import { Modal, TextField, Typography, Stack, Button, Box, IconButton, MenuItem, Select, SelectChangeEvent } from '@mui/material'
+import { Modal, TextField, Typography, Stack, Button, Box, MenuItem, Select } from '@mui/material'
 import { Dispatch, SetStateAction, useState } from 'react'
-import CloseIcon from '@mui/icons-material/Close';
 import NewSubtaskInput from './NewSubtaskInput';
+import PerfectScrollbar from 'react-perfect-scrollbar'
+import 'react-perfect-scrollbar/dist/css/styles.css';
 
 type Props = {
   openModal: boolean
@@ -24,14 +25,19 @@ const CreateNewTaskModal = (props: Props) => {
   const [description, setDescription] = useState<string>('');
   const [error, setError] = useState<boolean>(false)
   const [status, setStatus] = useState('Todo');
-  const [subtask, setSubtask] = useState<string[]>([''])
+  const [subtask, setSubtask] = useState<string[]>([])
   
   const addMoresubtask = () => {
     setSubtask([...subtask, ''])
   }
 
   const addTask = () => {
-    subtask.map(item => console.log(item))
+    console.log({
+      title: title,
+      description: description,
+      subtasks: subtask,
+      status: status
+    })
   }
 
   return (
@@ -39,7 +45,7 @@ const CreateNewTaskModal = (props: Props) => {
       <Stack sx={style} p={4} gap={2}>
         <Typography variant="h6" fontWeight='bold'>Add New Task</Typography>
         <TextField
-          error={error} label='Title' fullWidth variant="outlined" value={title}
+          error={false} label='Title' fullWidth variant="outlined" value={title}
           onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
             setTitle(event.target.value);
             setError(false)
@@ -55,12 +61,12 @@ const CreateNewTaskModal = (props: Props) => {
           helperText={error && 'Cannot be empty'}
         />
         <Box>
-          <Typography variant="subtitle2" color='gray'>subtask</Typography>
-          <Stack gap={2}>
+          <Typography variant="subtitle2" color='gray'>Subtask</Typography>
+          <PerfectScrollbar style={{maxHeight: 152, display: 'flex', flexDirection: 'column', gap: 16 }}>
             {subtask.map((item, index) => 
-              <NewSubtaskInput key={index} index={index} subtask={subtask} setSubtask={setSubtask} />
+              <NewSubtaskInput key={index} initVal={item} index={index} subtask={subtask} setSubtask={setSubtask} />
             )}
-          </Stack>
+          </PerfectScrollbar>
         </Box>
         <Button size='small' onClick={addMoresubtask} variant='outlined' sx={{ width: 'max-content', alignSelf: 'center', textTransform: 'none' }}>
           Add New Subtask

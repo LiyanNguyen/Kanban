@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import Board from "./components/Board"
-import Sidebar from "./components/Sidebar"
-import Topbar from "./components/Topbar"
+import Board from "./layouts/Board"
+import Sidebar from "./layouts/Sidebar"
+import Topbar from "./layouts/Topbar"
 import { Stack } from '@mui/material';
 
 const App = () => {
@@ -22,7 +22,7 @@ const App = () => {
       />
       <Stack width='100%'>
         <Topbar boardName={boards[selectedBoardIndex]} />
-        <Board/>
+        <Board columns={[]}/>
       </Stack>
     </Stack>
   )
