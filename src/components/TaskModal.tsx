@@ -1,10 +1,13 @@
-import { Modal, TextField, Typography, Stack, Button, Box, MenuItem, Select } from '@mui/material'
-import { Dispatch, SetStateAction, useState } from 'react'
+import { Modal, TextField, Typography, Stack, Button, Box, MenuItem, Select, Checkbox } from '@mui/material'
+import { Dispatch, SetStateAction, useEffect, useState } from 'react'
 import NewSubtaskInput from './NewSubtaskInput';
 import PerfectScrollbar from 'react-perfect-scrollbar'
 import 'react-perfect-scrollbar/dist/css/styles.css';
+import { subtask } from '../types/subtask';
+import { task } from '../types/task';
 
 type Props = {
+  data?: task
   openModal: boolean
   setOpenModal: Dispatch<SetStateAction<boolean>>
 }
@@ -15,20 +18,29 @@ const style = {
   left: '50%',
   transform: 'translate(-50%, -50%)',
   width: 480,
-  bgcolor: 'background.paper',
+  bgcolor: 'white',
   borderRadius: 1.5
 };
 
-const CreateNewTaskModal = (props: Props) => {
-  const { openModal, setOpenModal } = props
-  const [title, setTitle] = useState<string>('');
-  const [description, setDescription] = useState<string>('');
+const TaskModal = (props: Props) => {
+  const { data, openModal, setOpenModal } = props
+  const [title, setTitle] = useState<string | undefined>('');
+  const [description, setDescription] = useState<string | undefined>('');
   const [error, setError] = useState<boolean>(false)
-  const [status, setStatus] = useState('Todo');
-  const [subtask, setSubtask] = useState<string[]>([])
+  const [status, setStatus] = useState<string>('Todo');
+  const [subtask, setSubtask] = useState<subtask[]>([])
+
+  useEffect(() => {
+    if (data !== undefined) {
+      setTitle(data.title)
+      setDescription(data.description)
+      setStatus(data.status)
+      setSubtask(data.subtasks)
+    }
+  },[data])
   
   const addMoresubtask = () => {
-    setSubtask([...subtask, ''])
+    setSubtask(prev =>  prev?.concat({title: '', isCompleted: false}))
   }
 
   const addTask = () => {
@@ -43,7 +55,7 @@ const CreateNewTaskModal = (props: Props) => {
   return (
     <Modal open={openModal} onClose={() => setOpenModal(false)}>
       <Stack sx={style} p={4} gap={2}>
-        <Typography variant="h6" fontWeight='bold'>Add New Task</Typography>
+        <Typography variant="h6" fontWeight='bold'>{data !== undefined ? 'Edit' : 'Add New'} Task</Typography>
         <TextField
           error={false} label='Title' fullWidth variant="outlined" value={title}
           onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
@@ -61,10 +73,13 @@ const CreateNewTaskModal = (props: Props) => {
           helperText={error && 'Cannot be empty'}
         />
         <Box>
-          <Typography variant="subtitle2" color='gray'>Subtask</Typography>
+          {subtask.length !== 0 && <Typography variant="subtitle2" color='gray'>Subtask</Typography>}
           <PerfectScrollbar style={{maxHeight: 152, display: 'flex', flexDirection: 'column', gap: 16 }}>
-            {subtask.map((item, index) => 
-              <NewSubtaskInput key={index} initVal={item} index={index} subtask={subtask} setSubtask={setSubtask} />
+            {subtask?.map((item, index) => 
+              <Stack direction='row' gap={0} alignItems='center'>
+                {data !== undefined && <Checkbox checked={item.isCompleted} size='small'/>}
+                <NewSubtaskInput key={index} initVal={item.title} index={index} isCompleted={item.isCompleted} subtask={subtask} setSubtask={setSubtask} />
+              </Stack>
             )}
           </PerfectScrollbar>
         </Box>
@@ -87,4 +102,4 @@ const CreateNewTaskModal = (props: Props) => {
   )
 }
 
-export default CreateNewTaskModal
+export default TaskModal

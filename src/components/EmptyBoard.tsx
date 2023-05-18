@@ -1,6 +1,6 @@
 import { Button, Stack, Typography } from '@mui/material';
 import AddTaskIcon from '@mui/icons-material/AddTask';
-import CreateNewTaskModal from './CreateNewTaskModal';
+import TaskModal from './TaskModal';
 import React, { useState } from 'react';
 
 const EmptyBoard = () => {
@@ -12,7 +12,7 @@ const EmptyBoard = () => {
         <Typography textAlign='center'>This board is empty. Create a new task to get started.</Typography>
         <Button onClick={() => setOpenModal(true)} variant='outlined' sx={{ textTransform: 'none', gap: 1 }}><AddTaskIcon fontSize='small'/>Add New Task</Button>
       </Stack>
-      <CreateNewTaskModal openModal={openModal} setOpenModal={setOpenModal} />
+      <TaskModal openModal={openModal} setOpenModal={setOpenModal} />
     </React.Fragment>
   )
 }

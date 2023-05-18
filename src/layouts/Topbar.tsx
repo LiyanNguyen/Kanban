@@ -4,7 +4,7 @@ import { useState } from 'react';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import AddTaskIcon from '@mui/icons-material/AddTask';
-import CreateNewTaskModal from '../components/CreateNewTaskModal';
+import TaskModal from '../components/TaskModal';
 import React from 'react';
 
 interface Props {
@@ -44,7 +44,7 @@ const Topbar = (props: Props) => {
           </Menu>
         </Box>
       </Stack>
-      <CreateNewTaskModal openModal={openModal} setOpenModal={setOpenModal} />
+      <TaskModal openModal={openModal} setOpenModal={setOpenModal} />
     </React.Fragment>
   )
 }
