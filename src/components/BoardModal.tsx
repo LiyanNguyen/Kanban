@@ -1,5 +1,6 @@
-import { Modal, TextField, Typography, Stack, Button } from '@mui/material'
+import { Modal, TextField, Typography, Stack, Button, IconButton } from '@mui/material'
 import { Dispatch, SetStateAction, useEffect, useState } from 'react'
+import CloseIcon from '@mui/icons-material/Close';
 
 type Props = {
   boardName?: string
@@ -48,6 +49,9 @@ const BoardModal = (props: Props) => {
     <Modal open={openModal} onClose={() => setOpenModal(false)}>
       <Stack sx={style} p={4} gap={2}>
         <Typography variant="h6" fontWeight='bold'>{boardName === undefined ? 'Create New' : 'Edit'}  Board</Typography>
+        <IconButton sx={{position: 'absolute', top: 16, right: 16}} onClick={() => setOpenModal(false)}>
+          <CloseIcon/>
+        </IconButton>
         <TextField
           fullWidth label="Name" variant="outlined" value={name}
           onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
@@ -59,7 +63,7 @@ const BoardModal = (props: Props) => {
           onClick={selectedBoardIndex === undefined? addNewBoard : editBoard}
           variant='contained' sx={{ width: 'max-content', alignSelf: 'center', textTransform: 'none' }}
         >
-          {boardName !== undefined ? 'Save Changes' : 'Create New Board'}</Button>
+          {boardName === undefined ? 'Create New Board' : 'Save Changes'}</Button>
       </Stack>
     </Modal>
   )

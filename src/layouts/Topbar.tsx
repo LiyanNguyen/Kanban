@@ -7,6 +7,7 @@ import AddTaskIcon from '@mui/icons-material/AddTask';
 import TaskModal from '../components/TaskModal';
 import React from 'react';
 import BoardModal from '../components/BoardModal';
+import DeleteModal from '../components/DeleteModal';
 
 interface Props {
   boards: string[]
@@ -18,6 +19,7 @@ const Topbar = (props: Props) => {
   const { boards, setBoards, selectedBoardIndex } = props
   const [openTaskModal, setOpenTaskModal] = useState<boolean>(false);
   const [openBoardModal, setOpenBoardModal] = useState<boolean>(false);
+  const [openDeleteModal, setOpenDeleteModal] = useState<boolean>(false);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const openMenu = Boolean(anchorEl);
 
@@ -25,13 +27,14 @@ const Topbar = (props: Props) => {
     setAnchorEl(event.currentTarget);
   }
 
-  const openEditModal = () => {
+  const showEditModal = () => {
     setAnchorEl(null)
     setOpenBoardModal(true)
   }
 
-  const deleteBoard = () => {
-    console.log('delete')
+  const showDeleteModal = () => {
+    setAnchorEl(null)
+    setOpenDeleteModal(true)
   }
 
   return (
@@ -44,11 +47,11 @@ const Topbar = (props: Props) => {
             <MoreVertIcon sx={{ cursor: 'pointer', fontSize: 20, color: 'gray' }} />
           </IconButton>
           <Menu anchorEl={anchorEl} open={openMenu} onClose={() => setAnchorEl(null)}>
-            <MenuItem onClick={openEditModal} sx={{ display: 'flex', alignItems:'center', gap : 1}}>
+            <MenuItem onClick={showEditModal} sx={{ display: 'flex', alignItems:'center', gap : 1}}>
               <EditIcon sx={{color:'gray', fontSize: 18}} />
               <Typography variant='body1' color='gray'>Edit</Typography>
             </MenuItem>
-            <MenuItem onClick={deleteBoard} sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+            <MenuItem onClick={showDeleteModal} sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
               <DeleteOutlineIcon sx={{ color: 'red', fontSize: 18 }} />
               <Typography variant='body1' color='red'>Delete</Typography>
             </MenuItem>
@@ -64,6 +67,7 @@ const Topbar = (props: Props) => {
         openModal={openBoardModal}
         setOpenModal={setOpenBoardModal}
       />
+      <DeleteModal type='Board' itemName={boards[selectedBoardIndex]} openModal={openDeleteModal} setOpenModal={setOpenDeleteModal} />
     </React.Fragment>
   )
 }

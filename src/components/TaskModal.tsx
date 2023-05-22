@@ -1,10 +1,11 @@
-import { Modal, TextField, Typography, Stack, Button, Box, MenuItem, Select } from '@mui/material'
+import { Modal, TextField, Typography, Stack, Button, Box, MenuItem, Select, IconButton } from '@mui/material'
 import { Dispatch, SetStateAction, useEffect, useState } from 'react'
 import Subtask from './Subtask';
 import PerfectScrollbar from 'react-perfect-scrollbar'
 import 'react-perfect-scrollbar/dist/css/styles.css';
 import { subtask } from '../types/subtask';
 import { task } from '../types/task';
+import CloseIcon from '@mui/icons-material/Close';
 
 type Props = {
   data?: task
@@ -56,6 +57,9 @@ const TaskModal = (props: Props) => {
     <Modal open={openModal} onClose={() => setOpenModal(false)}>
       <Stack sx={style} p={4} gap={2}>
         <Typography variant="h6" fontWeight='bold'>{data === undefined ? 'Add New' : 'Edit'} Task</Typography>
+        <IconButton sx={{position: 'absolute', top: 16, right: 16}} onClick={() => setOpenModal(false)}>
+          <CloseIcon/>
+        </IconButton>
         <TextField
           error={false} label='Title' fullWidth variant="outlined" value={title}
           onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
@@ -91,9 +95,24 @@ const TaskModal = (props: Props) => {
             <MenuItem value='Done'>Done</MenuItem>
           </Select>
         </Box>
-        <Button onClick={addOrUdpateTask} variant='contained' sx={{ width: 'max-content', alignSelf: 'center', textTransform: 'none' }}>
-          {data !== undefined ? 'Update' : 'Create'} Task
-        </Button>
+        <Stack direction='row' gap={2} justifyContent='center'>
+          <Button
+            disabled={title === '' ? true : false}
+            onClick={addOrUdpateTask}
+            variant='contained'
+            sx={{ width: 'max-content', alignSelf: 'center', textTransform: 'none' }}>
+            {data === undefined ? 'Create' : 'Update'} Task
+          </Button>
+          {data !== undefined &&
+            <Button
+              variant='contained'
+              color='error'
+              sx={{ width: 'max-content', alignSelf: 'center', textTransform: 'none' }}
+            >
+              Delete Task
+            </Button>
+          }
+        </Stack>
       </Stack>
     </Modal>
   )
