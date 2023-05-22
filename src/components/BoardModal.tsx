@@ -1,7 +1,10 @@
 import { Modal, TextField, Typography, Stack, Button } from '@mui/material'
-import { Dispatch, SetStateAction, useState } from 'react'
+import { Dispatch, SetStateAction, useEffect, useState } from 'react'
 
 type Props = {
+  boardName?: string
+  selectedBoardIndex?: number
+  boards: string[]
   setBoards: Dispatch<SetStateAction<string[]>>
   openModal: boolean
   setOpenModal: Dispatch<SetStateAction<boolean>>
@@ -17,15 +20,25 @@ const style = {
   borderRadius: 1.5
 };
 
-const CreateNewBoardModal = (props: Props) => {
-  const { setBoards, openModal, setOpenModal } = props
+const BoardModal = (props: Props) => {
+  const { boardName, selectedBoardIndex, boards, setBoards, openModal, setOpenModal } = props
   const [name, setName] = useState<string>('');
-  const [error, setError] = useState<boolean>(false)
+
+  useEffect(() => {
+    if(boardName !== undefined) setName(boardName)
+  }, [boardName])
 
   const addNewBoard = () => {
-    if (name === '') setError(true)
-    else {
-      setBoards(prev => prev.concat(name))
+    setBoards(prev => prev.concat(name))
+    setOpenModal(false)
+    setName('')
+  }
+
+  const editBoard = () => {
+    if (selectedBoardIndex !== undefined) {
+      const data = [...boards];
+      data[selectedBoardIndex] = name
+      setBoards(data)
       setOpenModal(false)
       setName('')
     }
@@ -34,24 +47,22 @@ const CreateNewBoardModal = (props: Props) => {
   return (
     <Modal open={openModal} onClose={() => setOpenModal(false)}>
       <Stack sx={style} p={4} gap={2}>
-        <Typography variant="h6" fontWeight='bold'>Add New Board</Typography>
+        <Typography variant="h6" fontWeight='bold'>{boardName === undefined ? 'Create New' : 'Edit'}  Board</Typography>
         <TextField
-          error={error}
           fullWidth label="Name" variant="outlined" value={name}
           onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
             setName(event.target.value);
-            setError(false)
           }}
-          helperText={error && 'Cannot be empty'}
         />
         <Button
-          onClick={addNewBoard}
+          disabled={name === '' || boardName === name ? true : false}
+          onClick={selectedBoardIndex === undefined? addNewBoard : editBoard}
           variant='contained' sx={{ width: 'max-content', alignSelf: 'center', textTransform: 'none' }}
         >
-          Create Board</Button>
+          {boardName !== undefined ? 'Save Changes' : 'Create New Board'}</Button>
       </Stack>
     </Modal>
   )
 }
 
-export default CreateNewBoardModal
+export default BoardModal

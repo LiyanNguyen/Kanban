@@ -21,7 +21,11 @@ const App = () => {
         setSelectedBoardIndex={setSelectedBoardIndex}
       />
       <Stack width='100%'>
-        <Topbar boardName={boards[selectedBoardIndex]} />
+        <Topbar
+          boards={boards}
+          setBoards={setBoards}
+          selectedBoardIndex={selectedBoardIndex}
+        />
         <Board columns={[]}/>
       </Stack>
     </Stack>

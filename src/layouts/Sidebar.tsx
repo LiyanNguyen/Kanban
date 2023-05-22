@@ -1,7 +1,7 @@
 import React, { Dispatch, SetStateAction, useState } from 'react'
 import { Stack, Box, ListItemButton, ListItemText, List, Button, Typography } from '@mui/material';
 import logo from '../assets/logo-dark.svg'
-import CreateNewBoardModal from '../components/CreateNewBoardModal';
+import BoardModal from '../components/BoardModal';
 import PerfectScrollbar from 'react-perfect-scrollbar'
 import 'react-perfect-scrollbar/dist/css/styles.css';
 import AddIcon from '@mui/icons-material/Add';
@@ -39,7 +39,7 @@ const Sidebar = (props: Props) => {
           </PerfectScrollbar>
         </Stack>
       </Stack>
-      <CreateNewBoardModal openModal={openModal} setOpenModal={setOpenModal} setBoards={setBoards} />
+      <BoardModal openModal={openModal} setOpenModal={setOpenModal} boards={boards} setBoards={setBoards} />
     </React.Fragment>
   )
 }

@@ -1,6 +1,6 @@
-import { Modal, TextField, Typography, Stack, Button, Box, MenuItem, Select, Checkbox } from '@mui/material'
+import { Modal, TextField, Typography, Stack, Button, Box, MenuItem, Select } from '@mui/material'
 import { Dispatch, SetStateAction, useEffect, useState } from 'react'
-import NewSubtaskInput from './NewSubtaskInput';
+import Subtask from './Subtask';
 import PerfectScrollbar from 'react-perfect-scrollbar'
 import 'react-perfect-scrollbar/dist/css/styles.css';
 import { subtask } from '../types/subtask';
@@ -43,7 +43,7 @@ const TaskModal = (props: Props) => {
     setSubtask(prev =>  prev?.concat({title: '', isCompleted: false}))
   }
 
-  const addTask = () => {
+  const addOrUdpateTask = () => {
     console.log({
       title: title,
       description: description,
@@ -55,7 +55,7 @@ const TaskModal = (props: Props) => {
   return (
     <Modal open={openModal} onClose={() => setOpenModal(false)}>
       <Stack sx={style} p={4} gap={2}>
-        <Typography variant="h6" fontWeight='bold'>{data !== undefined ? 'Edit' : 'Add New'} Task</Typography>
+        <Typography variant="h6" fontWeight='bold'>{data === undefined ? 'Add New' : 'Edit'} Task</Typography>
         <TextField
           error={false} label='Title' fullWidth variant="outlined" value={title}
           onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
@@ -76,10 +76,7 @@ const TaskModal = (props: Props) => {
           {subtask.length !== 0 && <Typography variant="subtitle2" color='gray'>Subtask</Typography>}
           <PerfectScrollbar style={{maxHeight: 152, display: 'flex', flexDirection: 'column', gap: 16 }}>
             {subtask?.map((item, index) => 
-              <Stack direction='row' gap={0} alignItems='center'>
-                {data !== undefined && <Checkbox checked={item.isCompleted} size='small'/>}
-                <NewSubtaskInput key={index} initVal={item.title} index={index} isCompleted={item.isCompleted} subtask={subtask} setSubtask={setSubtask} />
-              </Stack>
+              <Subtask key={index} initVal={item.title} index={index} isCompleted={item.isCompleted} subtask={subtask} setSubtask={setSubtask} />
             )}
           </PerfectScrollbar>
         </Box>
@@ -94,8 +91,8 @@ const TaskModal = (props: Props) => {
             <MenuItem value='Done'>Done</MenuItem>
           </Select>
         </Box>
-        <Button onClick={addTask} variant='contained' sx={{ width: 'max-content', alignSelf: 'center', textTransform: 'none' }}>
-          Create Task
+        <Button onClick={addOrUdpateTask} variant='contained' sx={{ width: 'max-content', alignSelf: 'center', textTransform: 'none' }}>
+          {data !== undefined ? 'Update' : 'Create'} Task
         </Button>
       </Stack>
     </Modal>

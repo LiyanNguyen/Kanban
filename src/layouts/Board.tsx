@@ -14,7 +14,7 @@ const taskData = {
   subtasks: [
     {
       title: "Interview 10 customers",
-      isCompleted: true
+      isCompleted: false
     },
     {
       title: "Review common customer pain points and suggestions",
