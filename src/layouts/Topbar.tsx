@@ -1,6 +1,6 @@
 import { Box, Button, IconButton, Menu, MenuItem, Stack, Typography } from '@mui/material';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
-import { Dispatch, SetStateAction, useState } from 'react';
+import { useState } from 'react';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import AddTaskIcon from '@mui/icons-material/AddTask';
@@ -8,15 +8,10 @@ import TaskModal from '../components/TaskModal';
 import React from 'react';
 import BoardModal from '../components/BoardModal';
 import DeleteModal from '../components/DeleteModal';
+import { boardStore } from '../zustand/boardStore';
 
-interface Props {
-  boards: string[]
-  setBoards: Dispatch<SetStateAction<string[]>>
-  selectedBoardIndex: number
-}
-
-const Topbar = (props: Props) => {
-  const { boards, setBoards, selectedBoardIndex } = props
+const Topbar = () => {
+  const [boards, boardIndex] = boardStore((state) => [state.boards, state.boardIndex]);
   const [openTaskModal, setOpenTaskModal] = useState<boolean>(false);
   const [openBoardModal, setOpenBoardModal] = useState<boolean>(false);
   const [openDeleteModal, setOpenDeleteModal] = useState<boolean>(false);
@@ -40,7 +35,7 @@ const Topbar = (props: Props) => {
   return (
     <React.Fragment>
       <Stack direction='row' alignItems='center' px={4} height={97} bgcolor='white' borderBottom={'1px solid #E4EBFA'} justifyContent='space-between'>
-        <Typography variant='h6' fontWeight='bold'>{boards[selectedBoardIndex]}</Typography>
+        <Typography variant='h6' fontWeight='bold'>{boards[boardIndex]}</Typography>
         <Box>
           <Button onClick={() => setOpenTaskModal(true)} variant='outlined' sx={{ textTransform: 'none', gap: 1 }}><AddTaskIcon fontSize='small'/> Add New Task</Button>
           <IconButton onClick={handleClick}>
@@ -59,15 +54,8 @@ const Topbar = (props: Props) => {
         </Box>
       </Stack>
       <TaskModal openModal={openTaskModal} setOpenModal={setOpenTaskModal} />
-      <BoardModal
-        boardName={boards[selectedBoardIndex]}
-        selectedBoardIndex={selectedBoardIndex}
-        boards={boards}
-        setBoards={setBoards}
-        openModal={openBoardModal}
-        setOpenModal={setOpenBoardModal}
-      />
-      <DeleteModal type='Board' itemName={boards[selectedBoardIndex]} openModal={openDeleteModal} setOpenModal={setOpenDeleteModal} />
+      <BoardModal isEditing boardName={boards[boardIndex]} openModal={openBoardModal} setOpenModal={setOpenBoardModal} />
+      <DeleteModal type='Board' itemName={boards[boardIndex]} openModal={openDeleteModal} setOpenModal={setOpenDeleteModal} />
     </React.Fragment>
   )
 }

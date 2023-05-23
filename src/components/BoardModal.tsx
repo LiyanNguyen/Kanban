@@ -1,12 +1,11 @@
 import { Modal, TextField, Typography, Stack, Button, IconButton } from '@mui/material'
 import { Dispatch, SetStateAction, useEffect, useState } from 'react'
 import CloseIcon from '@mui/icons-material/Close';
+import { boardStore } from '../zustand/boardStore';
 
 type Props = {
+  isEditing?: boolean
   boardName?: string
-  selectedBoardIndex?: number
-  boards: string[]
-  setBoards: Dispatch<SetStateAction<string[]>>
   openModal: boolean
   setOpenModal: Dispatch<SetStateAction<boolean>>
 }
@@ -22,7 +21,8 @@ const style = {
 };
 
 const BoardModal = (props: Props) => {
-  const { boardName, selectedBoardIndex, boards, setBoards, openModal, setOpenModal } = props
+  const { isEditing, boardName, openModal, setOpenModal } = props
+  const [boards, setBoards, boardIndex ] = boardStore((state) => [state.boards, state.setBoards, state.boardIndex])  
   const [name, setName] = useState<string>('');
 
   useEffect(() => {
@@ -30,15 +30,15 @@ const BoardModal = (props: Props) => {
   }, [boardName])
 
   const addNewBoard = () => {
-    setBoards(prev => prev.concat(name))
+    setBoards(boards.concat(name))
     setOpenModal(false)
     setName('')
   }
 
   const editBoard = () => {
-    if (selectedBoardIndex !== undefined) {
+    if (boardIndex !== undefined) {
       const data = [...boards];
-      data[selectedBoardIndex] = name
+      data[boardIndex] = name
       setBoards(data)
       setOpenModal(false)
       setName('')
@@ -60,7 +60,7 @@ const BoardModal = (props: Props) => {
         />
         <Button
           disabled={name === '' || boardName === name ? true : false}
-          onClick={selectedBoardIndex === undefined? addNewBoard : editBoard}
+          onClick={isEditing ? editBoard : addNewBoard}
           variant='contained' sx={{ width: 'max-content', alignSelf: 'center', textTransform: 'none' }}
         >
           {boardName === undefined ? 'Create New Board' : 'Save Changes'}</Button>

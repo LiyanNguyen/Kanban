@@ -1,21 +1,15 @@
-import React, { Dispatch, SetStateAction, useState } from 'react'
+import React, { useState } from 'react'
 import { Stack, Box, ListItemButton, ListItemText, List, Button, Typography } from '@mui/material';
 import logo from '../assets/logo-dark.svg'
 import BoardModal from '../components/BoardModal';
 import PerfectScrollbar from 'react-perfect-scrollbar'
 import 'react-perfect-scrollbar/dist/css/styles.css';
 import AddIcon from '@mui/icons-material/Add';
+import { boardStore } from '../zustand/boardStore';
 
-interface Props {
-  boards: string[]
-  setBoards: Dispatch<SetStateAction<string[]>>
-  setSelectedBoardIndex: Dispatch<SetStateAction<number>>
-  selectedBoardIndex: number
-}
-
-const Sidebar = (props: Props) => {
-  const { boards, setBoards, setSelectedBoardIndex, selectedBoardIndex } = props
-  const [openModal, setOpenModal] = useState<boolean>(false);
+const Sidebar = () => {
+  const [boards, boardIndex, setBoardIndex] = boardStore((state) => [state.boards, state.boardIndex, state.setBoardIndex])
+  const [openModal, setOpenModal] = useState<boolean>(false)
 
   return (
     <React.Fragment>
@@ -31,7 +25,7 @@ const Sidebar = (props: Props) => {
           <PerfectScrollbar style={{ maxHeight: 550 }}>
             <List>
               {boards.map((item, index) =>
-                <ListItemButton key={index} selected={index === selectedBoardIndex} onClick={() => setSelectedBoardIndex(index)}>
+                <ListItemButton key={index} selected={index === boardIndex} onClick={() => setBoardIndex(index)}>
                   <ListItemText primary={item} />
                 </ListItemButton>
               )}
@@ -39,7 +33,7 @@ const Sidebar = (props: Props) => {
           </PerfectScrollbar>
         </Stack>
       </Stack>
-      <BoardModal openModal={openModal} setOpenModal={setOpenModal} boards={boards} setBoards={setBoards} />
+      <BoardModal openModal={openModal} setOpenModal={setOpenModal}/>
     </React.Fragment>
   )
 }
