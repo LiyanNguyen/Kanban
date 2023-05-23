@@ -9,7 +9,7 @@ const App = () => {
       <Sidebar />
       <Stack width='100%'>
         <Topbar />
-        <Board columns={[]}/>
+        <Board />
       </Stack>
     </Stack>
   )

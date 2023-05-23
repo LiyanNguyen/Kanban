@@ -1,63 +1,25 @@
-import { Box, Stack, Typography } from '@mui/material';
+import { Stack } from '@mui/material';
 import EmptyBoard from '../components/EmptyBoard';
-import React from 'react';
-import TaskCard from '../components/TaskCard';
+import React, { useEffect } from 'react';
+import Column from '../components/Column';
+import { boardStore } from '../zustand/boardStore';
+import columnData   from '../data/columnData'
 
-interface Props {
-  columns?: []
-}
+const Board = () => {
+  const [boardIndex] = boardStore((state) => [state.boardIndex])
 
-const taskData = {
-  title: "Review feedback and plan next steps",
-  description: "Beyond the initial launch, we're keeping the initial roadmap completely empty. This meeting will help us plan out our next steps based on actual customer feedback.",
-  status: "Todo",
-  subtasks: [
-    {
-      title: "Interview 10 customers",
-      isCompleted: false
-    },
-    {
-      title: "Review common customer pain points and suggestions",
-      isCompleted: false
-    },
-    {
-      title: "Outline next steps for our roadmap",
-      isCompleted: false
-    }
-  ]
-}
+  useEffect(() => {
+    console.log(boardIndex)
+  })
 
-const Board = (props: Props) => {
-  const { columns } = props
 
   return (
-    <Stack direction='row' bgcolor='#F4F7FD' width='100%' height='100%' justifyContent={columns === undefined ? 'center' : 'space-between'} p={3} gap={3}>
-      {columns === undefined ? <EmptyBoard /> :
+    <Stack direction='row' bgcolor='#F4F7FD' width='100%' height='100%' justifyContent={columnData === undefined ? 'center' : 'space-between'} p={3} gap={3}>
+      {columnData === undefined ? <EmptyBoard /> :
         <React.Fragment>
-          <Stack width='100%' gap={2}>
-            <Stack direction='row' gap={1.5}>
-              <Box width={15} height={15} borderRadius='50%' bgcolor='#49C4E5' />
-              <Typography color='#828FA3' textTransform='uppercase' fontWeight='bold' fontSize={12}>Todo (4)</Typography>
-            </Stack>
-            <TaskCard data={taskData} />
-            <TaskCard data={taskData} />
-          </Stack>
-          <Stack width='100%' gap={2}>
-            <Stack direction='row' gap={1.5}>
-              <Box width={15} height={15} borderRadius='50%' bgcolor='#8471F2' />
-              <Typography color='#828FA3' textTransform='uppercase' fontWeight='bold' fontSize={12}>Doing (6)</Typography>
-            </Stack>
-            <TaskCard data={taskData} />
-            <TaskCard data={taskData} />
-          </Stack>
-          <Stack width='100%' gap={2}>
-            <Stack direction='row' gap={1.5}>
-              <Box width={15} height={15} borderRadius='50%' bgcolor='#67E2AE' />
-              <Typography color='#828FA3' textTransform='uppercase' fontWeight='bold' fontSize={12}>Done (7)</Typography>
-            </Stack>
-            <TaskCard data={taskData} />
-            <TaskCard data={taskData} />
-          </Stack>
+          {columnData.map(item => 
+            <Column key={item.name} type={item.name} />
+          )}
         </React.Fragment>
       }
     </Stack>
