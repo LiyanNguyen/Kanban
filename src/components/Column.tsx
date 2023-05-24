@@ -5,11 +5,11 @@ import { task } from '../types/task'
 
 type Props = {
   type: 'Todo' | 'Doing' | 'Done' | string
-  task: task[]
+  tasks: task[]
 }
 
 const Column = (props: Props) => {
-  const { type, task } = props
+  const { type, tasks } = props
   const [badgeColor, setBadgeColor] = useState<string>('') 
 
   useEffect(() => {
@@ -22,9 +22,9 @@ const Column = (props: Props) => {
     <Stack width='100%' gap={2}>
       <Stack direction='row' gap={1.5}>
         <Box width={15} height={15} borderRadius='50%' bgcolor={badgeColor} />
-        <Typography color='#828FA3' textTransform='uppercase' fontWeight='bold' fontSize={12}>{type} ({task.length})</Typography>
+        <Typography color='#828FA3' textTransform='uppercase' fontWeight='bold' fontSize={12}>{type} ({tasks.length})</Typography>
       </Stack>
-      {task.map((item, index) => <TaskCard key={index} data={item} />)}
+      {tasks.map((item, index) => <TaskCard key={index} data={item} />)}
     </Stack>
   )
 }
