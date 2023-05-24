@@ -1,6 +1,6 @@
 import { task } from "./task"
 
 export type column = {
-	name: string
-	tasks: task[]
+  name: 'Todo' | 'Doing' | 'Done'
+  tasks: task[]
 }

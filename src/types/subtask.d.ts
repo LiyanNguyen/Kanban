@@ -1,4 +1,4 @@
 export type subtask = {
-	title: string
-	isCompleted: boolean
+  title: string
+  isCompleted: boolean
 }
