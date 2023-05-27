@@ -101,6 +101,7 @@ const TestBoard = () => {
                       }
                     </Draggable>                      
                   )}
+                  {provided.placeholder}
                 </Stack>
               }
             </Droppable>
