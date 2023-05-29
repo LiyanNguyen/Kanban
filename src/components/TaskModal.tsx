@@ -8,6 +8,7 @@ import { task } from '../types/task'
 import CloseIcon from '@mui/icons-material/Close'
 
 type Props = {
+  taskID?: string
   data?: task
   openModal: boolean
   setOpenModal: Dispatch<SetStateAction<boolean>>
@@ -24,7 +25,7 @@ const style = {
 }
 
 const TaskModal = (props: Props) => {
-  const { data, openModal, setOpenModal } = props
+  const { taskID, data, openModal, setOpenModal } = props
   const [title, setTitle] = useState<string | undefined>('')
   const [description, setDescription] = useState<string | undefined>('')
   const [error, setError] = useState<boolean>(false)
@@ -44,6 +45,7 @@ const TaskModal = (props: Props) => {
 
   const addOrUdpateTask = () => {
     console.log({
+      id: taskID,
       title: title,
       description: description,
       subtasks: subtask,

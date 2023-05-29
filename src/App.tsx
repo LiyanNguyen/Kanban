@@ -1,6 +1,5 @@
 import Board from "./layouts/Board"
 import Sidebar from "./layouts/Sidebar"
-import TestBoard from "./layouts/TestBoard";
 import Topbar from "./layouts/Topbar"
 import { Stack } from '@mui/material';
 
@@ -10,8 +9,7 @@ const App = () => {
       <Sidebar />
       <Stack width='100%'>
         <Topbar />
-        {/* <Board /> */}
-        <TestBoard/>
+        <Board />
       </Stack>
     </Stack>
   )
