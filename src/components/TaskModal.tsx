@@ -1,11 +1,11 @@
-import { Modal, TextField, Typography, Stack, Button, Box, MenuItem, Select, IconButton } from '@mui/material'
+import { Modal, TextField, Typography, Stack, Button, Box, IconButton, Divider } from '@mui/material'
 import { Dispatch, SetStateAction, useEffect, useState } from 'react'
-import Subtask from './Subtask';
+import Subtask from './Subtask'
 import PerfectScrollbar from 'react-perfect-scrollbar'
-import 'react-perfect-scrollbar/dist/css/styles.css';
-import { subtask } from '../types/subtask';
-import { task } from '../types/task';
-import CloseIcon from '@mui/icons-material/Close';
+import 'react-perfect-scrollbar/dist/css/styles.css'
+import { subtask } from '../types/subtask'
+import { task } from '../types/task'
+import CloseIcon from '@mui/icons-material/Close'
 
 type Props = {
   data?: task
@@ -21,21 +21,19 @@ const style = {
   width: 480,
   bgcolor: 'white',
   borderRadius: 1.5
-};
+}
 
 const TaskModal = (props: Props) => {
   const { data, openModal, setOpenModal } = props
-  const [title, setTitle] = useState<string | undefined>('');
-  const [description, setDescription] = useState<string | undefined>('');
+  const [title, setTitle] = useState<string | undefined>('')
+  const [description, setDescription] = useState<string | undefined>('')
   const [error, setError] = useState<boolean>(false)
-  const [status, setStatus] = useState<string>('Todo');
   const [subtask, setSubtask] = useState<subtask[]>([])
 
   useEffect(() => {
     if (data !== undefined) {
       setTitle(data.title)
       setDescription(data.description)
-      setStatus(data.status)
       setSubtask(data.subtasks)
     }
   },[data])
@@ -49,7 +47,6 @@ const TaskModal = (props: Props) => {
       title: title,
       description: description,
       subtasks: subtask,
-      status: status
     })
   }
 
@@ -63,7 +60,7 @@ const TaskModal = (props: Props) => {
         <TextField
           error={false} label='Title' fullWidth variant="outlined" value={title}
           onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-            setTitle(event.target.value);
+            setTitle(event.target.value)
             setError(false)
           }}
           helperText={error && 'Cannot be empty'}
@@ -71,7 +68,7 @@ const TaskModal = (props: Props) => {
         <TextField
           error={error} label='Description' multiline minRows={4} fullWidth variant="outlined" value={description}
           onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-            setDescription(event.target.value);
+            setDescription(event.target.value)
             setError(false)
           }}
           helperText={error && 'Cannot be empty'}
@@ -87,14 +84,7 @@ const TaskModal = (props: Props) => {
         <Button size='small' onClick={addMoresubtask} variant='outlined' sx={{ width: 'max-content', alignSelf: 'center', textTransform: 'none' }}>
           Add New Subtask
         </Button>
-        <Box>
-          <Typography variant="subtitle2" color='gray'>Status</Typography>
-          <Select value={status} onChange={(event) => setStatus(event.target.value)} fullWidth size='small'>
-            <MenuItem value='Todo'>Todo</MenuItem>
-            <MenuItem value='Doing'>Doing</MenuItem>
-            <MenuItem value='Done'>Done</MenuItem>
-          </Select>
-        </Box>
+        <Divider sx={{mt: 1}}/>
         <Stack direction='row' gap={2} justifyContent='center'>
           <Button
             disabled={title === '' ? true : false}

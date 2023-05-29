@@ -1,6 +1,6 @@
 import { create } from 'zustand'
 import { task } from '../types/task'
-import boardData from '../data/boardData'
+import boardData from '../data/TodoTasks'
 
 interface IboardStore {
   boardData: task []
