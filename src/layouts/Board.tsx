@@ -1,26 +1,10 @@
 import { useEffect, useState } from "react";
 import { DragDropContext, DropResult } from "@hello-pangea/dnd"
-import { v4 as uuidv4 } from 'uuid';
 import { Stack } from '@mui/material';
-import TodoTasks from "../data/TodoTasks";
 import { column } from "../types/column";
 import EmptyBoard from "../components/EmptyBoard";
 import Column from "../components/Column";
-
-const columnsFromBackend: column = {
-  [uuidv4()]: {
-    name: 'Todo',
-    tasks: TodoTasks
-  },
-  [uuidv4()]: {
-    name: 'Doing',
-    tasks: []
-  },
-  [uuidv4()]: {
-    name: 'Done',
-    tasks: []
-  }
-}
+import { BoardData } from "../data/BoardData";
 
 const onDragEnd = (result: DropResult, columns: column, setColumns: React.Dispatch<React.SetStateAction<column>>) => {
   if (!result.destination) return
@@ -62,7 +46,7 @@ const onDragEnd = (result: DropResult, columns: column, setColumns: React.Dispat
 }
 
 const TestBoard = () => {
-  const [columns, setColumns] = useState<column>(columnsFromBackend)
+  const [columns, setColumns] = useState<column>(BoardData)
   const [isEmpty, setIsEmpty] = useState<boolean>(false)
 
   useEffect(() => {
