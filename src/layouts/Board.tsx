@@ -1,51 +1,13 @@
 import { useEffect, useState } from "react";
-import { DragDropContext, DropResult } from "@hello-pangea/dnd"
+import { DragDropContext } from "@hello-pangea/dnd"
 import { Stack } from '@mui/material';
 import { column } from "../types/column";
 import EmptyBoard from "../components/EmptyBoard";
 import Column from "../components/Column";
 import { BoardData } from "../data/BoardData";
+import { onDragEnd } from "../utils/OnDragEnd";
 
-const onDragEnd = (result: DropResult, columns: column, setColumns: React.Dispatch<React.SetStateAction<column>>) => {
-  if (!result.destination) return
-  const { source, destination } = result
-
-  if (source.droppableId !== destination.droppableId) {
-    const sourceColumn = columns[source.droppableId]
-    const destColumn = columns[destination.droppableId]
-    const sourceItems = [...sourceColumn.tasks]
-    const destItems = [...destColumn.tasks]
-    const [removed] = sourceItems.splice(source.index, 1)
-    destItems.splice(destination.index, 0, removed)
-    setColumns({
-      ...columns,
-      [source.droppableId]: {
-        ...sourceColumn,
-        tasks: sourceItems
-      },
-      [destination.droppableId]: {
-        ...destColumn,
-        tasks: destItems
-      }
-    })
-  }
-  
-  else {
-    const column = columns[source.droppableId]
-    const copiedItems = [...column.tasks]
-    const [removed] = copiedItems.splice(source.index, 1)
-    copiedItems.splice(destination.index, 0, removed)
-    setColumns({
-      ...columns,
-      [source.droppableId]: {
-        ...column,
-        tasks: copiedItems
-      }
-    })
-  }
-}
-
-const TestBoard = () => {
+const Board = () => {
   const [columns, setColumns] = useState<column>(BoardData)
   const [isEmpty, setIsEmpty] = useState<boolean>(false)
 
@@ -60,12 +22,12 @@ const TestBoard = () => {
       {isEmpty ? <EmptyBoard /> :
         <DragDropContext onDragEnd={result => onDragEnd(result, columns, setColumns)}>
           {Object.entries(columns).map(([columnID, column]) =>
-            <Column key={columnID} columnID={columnID} column={column} />
+            <Column key={columnID} columnID={columnID} column={column} columns={columns} setColumns={setColumns} />
           )}
         </DragDropContext>
       }
     </Stack>
-  );
+  )
 }
 
-export default TestBoard;
+export default Board;
