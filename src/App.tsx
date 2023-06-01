@@ -1,4 +1,5 @@
-import TaskModal from "./components/TaskModal";
+import CreateTaskModal from "./components/CreateTaskModal";
+import ViewTaskModal from "./components/ViewTaskModal";
 import Board from "./layouts/Board"
 import Sidebar from "./layouts/Sidebar"
 import Topbar from "./layouts/Topbar"
@@ -15,7 +16,8 @@ const App = () => {
           <Board />
         </Stack>
       </Stack>
-      <TaskModal />
+      <CreateTaskModal />
+      <ViewTaskModal />
     </>
   )
 }

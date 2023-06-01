@@ -1,23 +1,13 @@
 import { Modal, TextField, Typography, Stack, Button, Box, IconButton, Divider } from '@mui/material'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import Subtask from './Subtask'
 import PerfectScrollbar from 'react-perfect-scrollbar'
 import 'react-perfect-scrollbar/dist/css/styles.css'
 import { subtask } from '../types/subtask'
-import { task } from '../types/task'
 import CloseIcon from '@mui/icons-material/Close'
 import { v4 as uuidv4 } from 'uuid';
 import { columnStore } from '../zustand/columnStore'
 import { modalStore } from '../zustand/modalStore'
-
-type Props = {
-  //if deleting existing task, this is passed
-  columnID?: string
-
-  // if editing existing task, this is passed
-  taskID?: string
-  data?: task
-}
 
 const style = {
   position: 'absolute',
@@ -29,8 +19,7 @@ const style = {
   borderRadius: 1.5
 }
 
-const TaskModal = (props: Props) => {
-  const { columnID, taskID, data } = props
+const CreateTaskModal = () => {
   const [title, setTitle] = useState<string>('')
   const [description, setDescription] = useState<string>('')
   const [error, setError] = useState<boolean>(false)
@@ -42,38 +31,9 @@ const TaskModal = (props: Props) => {
     modalStore((state) =>
       [state.openTaskModal, state.setOpenTaskModal])
 
-  useEffect(() => {
-    if (data !== undefined) {
-      setTitle(data.title)
-      setDescription(data.description)
-      setSubtask(data.subtasks)
-    }
-  },[data])
   
   const addMoreSubtask = () => {
     setSubtask(prev =>  prev?.concat({title: '', isCompleted: false}))
-  }
-
-  const updateTask = () => {
-    if (columnID !== undefined) {
-      const taskArray = columns[columnID].tasks
-      const itemIndex = columns[columnID].tasks.findIndex(item => item.id === taskID)
-      const taskItem = taskArray[itemIndex]
-
-      taskItem.title = title
-      taskItem.description = description
-      taskItem.subtasks = subtask
-
-      setColumns({
-        ...columns,
-        [columnID]: {
-          ...columns[columnID],
-          tasks: taskArray
-        }
-      })
-
-      setOpenTaskModal(false)
-    }
   }
 
   const addNewTask = () => {
@@ -98,20 +58,6 @@ const TaskModal = (props: Props) => {
     setSubtask([])
   }
 
-  const deleteTask = () => {
-    if (columnID !== undefined) {
-      const newTaskArrayAfterDelete = columns[columnID].tasks.filter(item => item.id !== taskID)
-
-      setColumns({
-        ...columns,
-        [columnID]: {
-          ...columns[columnID],
-          tasks: newTaskArrayAfterDelete
-        }
-      })
-    }    
-  }
-
   const closeModal = () => {
     setOpenTaskModal(false)
   }
@@ -119,7 +65,7 @@ const TaskModal = (props: Props) => {
   return (
     <Modal open={openTaskModal} onClose={closeModal}>
       <Stack sx={style} p={4} gap={2}>
-        <Typography variant="h6" fontWeight='bold'>{data === undefined ? 'Add New' : 'Edit'} Task</Typography>
+        <Typography variant="h6" fontWeight='bold'>Add New Task</Typography>
         <IconButton sx={{position: 'absolute', top: 16, right: 16}} onClick={closeModal}>
           <CloseIcon/>
         </IconButton>
@@ -140,10 +86,10 @@ const TaskModal = (props: Props) => {
           helperText={error && 'Cannot be empty'}
         />
         <Box>
-          {subtask.length !== 0 && <Typography variant="subtitle2" color='gray'>Subtask</Typography>}
+          {subtask.length !== 0 && <Typography mb={1} variant="subtitle2" color='#828FA3'>Subtask ({subtask.length})</Typography>}
           <PerfectScrollbar style={{maxHeight: 152, display: 'flex', flexDirection: 'column', gap: 16 }}>
             {subtask?.map((item, index) => 
-              <Subtask key={index} initVal={item.title} index={index} isCompleted={item.isCompleted} subtask={subtask} setSubtask={setSubtask} hasCheckBox={data === undefined ? false: true} />
+              <Subtask key={index} initVal={item.title} index={index} isCompleted={item.isCompleted} subtask={subtask} setSubtask={setSubtask} hasCheckBox={false} />
             )}
           </PerfectScrollbar>
         </Box>
@@ -154,25 +100,15 @@ const TaskModal = (props: Props) => {
         <Stack direction='row' gap={2} justifyContent='center'>
           <Button
             disabled={title === '' ? true : false}
-            onClick={data === undefined? addNewTask : updateTask}
+            onClick={addNewTask}
             variant='contained'
             sx={{ width: 'max-content', alignSelf: 'center', textTransform: 'none' }}>
-            {data === undefined ? 'Create' : 'Update'} Task
+            Create Task
           </Button>
-          {data !== undefined &&
-            <Button
-              onClick={deleteTask}
-              variant='contained'
-              color='error'
-              sx={{ width: 'max-content', alignSelf: 'center', textTransform: 'none' }}
-            >
-              Delete Task
-            </Button>
-          }
         </Stack>
       </Stack>
     </Modal>
   )
 }
 
-export default TaskModal
+export default CreateTaskModal

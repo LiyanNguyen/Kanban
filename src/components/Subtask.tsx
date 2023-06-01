@@ -47,6 +47,7 @@ const Subtask = (props: Props) => {
     <Stack direction='row' gap={0} alignItems='center'>
       {hasCheckBox && <Checkbox checked={checked} size='small' onChange={() => onCheckBoxChange(!checked)} />}
       <TextField
+        multiline 
         error={error} fullWidth variant="outlined" value={value} size='small' autoFocus disabled={checked}
         onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
           setValue(event.target.value)
@@ -55,11 +56,13 @@ const Subtask = (props: Props) => {
         }}
         helperText={error && 'Cannot be empty'}
         InputProps={{
-          endAdornment: (
+          endAdornment: ( 
             <InputAdornment position="end">
-              <IconButton onClick={deleteThisInput} color='error' sx={{ padding: 0 }}>
-                <CloseIcon fontSize='small' />
-              </IconButton>
+              {!hasCheckBox &&
+                <IconButton onClick={deleteThisInput} color='error' sx={{ padding: 0 }}>
+                  <CloseIcon fontSize='small' />
+                </IconButton>
+              }
             </InputAdornment>
           )
         }}
