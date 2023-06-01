@@ -1,14 +1,18 @@
-import { useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { DragDropContext } from "@hello-pangea/dnd"
 import { Stack } from '@mui/material';
 import { column } from "../types/column";
 import EmptyBoard from "../components/EmptyBoard";
 import Column from "../components/Column";
-import { BoardData } from "../data/BoardData";
 import { onDragEnd } from "../utils/OnDragEnd";
 
-const Board = () => {
-  const [columns, setColumns] = useState<column>(BoardData)
+type Props = {
+  columns: column
+  setColumns: Dispatch<SetStateAction<column>>
+}
+
+const Board = (props: Props) => {
+  const {columns, setColumns} = props
   const [isEmpty, setIsEmpty] = useState<boolean>(false)
 
   useEffect(() => {
@@ -22,7 +26,7 @@ const Board = () => {
       {isEmpty ? <EmptyBoard /> :
         <DragDropContext onDragEnd={result => onDragEnd(result, columns, setColumns)}>
           {Object.entries(columns).map(([columnID, column]) =>
-            <Column key={columnID} columnID={columnID} column={column} columns={columns} setColumns={setColumns} />
+            <Column key={columnID} columnID={columnID} column={column} />
           )}
         </DragDropContext>
       }

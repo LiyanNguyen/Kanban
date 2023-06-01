@@ -1,6 +1,6 @@
 import { Box, Button, IconButton, Menu, MenuItem, Stack, Typography } from '@mui/material';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
-import { useState } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import AddTaskIcon from '@mui/icons-material/AddTask';
@@ -9,8 +9,15 @@ import React from 'react';
 import BoardModal from '../components/BoardModal';
 import DeleteModal from '../components/DeleteModal';
 import { boardStore } from '../zustand/boardStore';
+import { column } from '../types/column';
 
-const Topbar = () => {
+type Props = {
+  columns: column
+  setColumns: Dispatch<SetStateAction<column>>
+}
+
+const Topbar = (props: Props) => {
+  const {columns, setColumns} = props
   const [boards, boardIndex] = boardStore((state) => [state.boards, state.boardIndex]);
   const [openTaskModal, setOpenTaskModal] = useState<boolean>(false);
   const [openBoardModal, setOpenBoardModal] = useState<boolean>(false);
@@ -53,7 +60,7 @@ const Topbar = () => {
           </Menu>
         </Box>
       </Stack>
-      <TaskModal openModal={openTaskModal} setOpenModal={setOpenTaskModal} />
+      <TaskModal openModal={openTaskModal} setOpenModal={setOpenTaskModal} columns={columns} setColumns={setColumns} />
       <BoardModal isEditing boardName={boards[boardIndex]} openModal={openBoardModal} setOpenModal={setOpenBoardModal} />
       <DeleteModal type='Board' itemName={boards[boardIndex]} openModal={openDeleteModal} setOpenModal={setOpenDeleteModal} />
     </React.Fragment>

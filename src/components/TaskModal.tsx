@@ -6,10 +6,19 @@ import 'react-perfect-scrollbar/dist/css/styles.css'
 import { subtask } from '../types/subtask'
 import { task } from '../types/task'
 import CloseIcon from '@mui/icons-material/Close'
+import { column } from '../types/column'
+import { v4 as uuidv4 } from 'uuid';
+import { columnStore } from '../zustand/columnStore'
 
 type Props = {
+  // if creating new task, this is passed
+  columns?: column
+  setColumns?: Dispatch<SetStateAction<column>>
+
+  // if editing existing task, this is passed
   taskID?: string
   data?: task
+
   openModal: boolean
   setOpenModal: Dispatch<SetStateAction<boolean>>
 }
@@ -25,11 +34,12 @@ const style = {
 }
 
 const TaskModal = (props: Props) => {
-  const { taskID, data, openModal, setOpenModal } = props
-  const [title, setTitle] = useState<string | undefined>('')
-  const [description, setDescription] = useState<string | undefined>('')
+  const { taskID, data, openModal, setOpenModal, columns, setColumns } = props
+  const [title, setTitle] = useState<string>('')
+  const [description, setDescription] = useState<string>('')
   const [error, setError] = useState<boolean>(false)
   const [subtask, setSubtask] = useState<subtask[]>([])
+  const todoColumnID = columnStore((state) => state.todoColumnID)
 
   useEffect(() => {
     if (data !== undefined) {
@@ -39,11 +49,11 @@ const TaskModal = (props: Props) => {
     }
   },[data])
   
-  const addMoresubtask = () => {
+  const addMoreSubtask = () => {
     setSubtask(prev =>  prev?.concat({title: '', isCompleted: false}))
   }
 
-  const addOrUdpateTask = () => {
+  const updateTask = () => {
     console.log({
       id: taskID,
       title: title,
@@ -52,11 +62,39 @@ const TaskModal = (props: Props) => {
     })
   }
 
+  const addNewTask = () => {
+    const newTodoTask = {
+      id: uuidv4(),
+      title: title,
+      description: description,
+      subtasks: subtask,
+    }
+
+    if (setColumns && columns !== undefined) {
+      setColumns({
+        ...columns,
+        [todoColumnID]: {
+          ...columns[todoColumnID],
+          tasks: [newTodoTask, ...columns[todoColumnID].tasks]
+        }
+      })
+    }
+
+    setOpenModal(false)
+    setTitle('')
+    setDescription('')
+    setSubtask([])
+  }
+
+  const closeModal = () => {
+    setOpenModal(false)
+  }
+
   return (
-    <Modal open={openModal} onClose={() => setOpenModal(false)}>
+    <Modal open={openModal} onClose={closeModal}>
       <Stack sx={style} p={4} gap={2}>
         <Typography variant="h6" fontWeight='bold'>{data === undefined ? 'Add New' : 'Edit'} Task</Typography>
-        <IconButton sx={{position: 'absolute', top: 16, right: 16}} onClick={() => setOpenModal(false)}>
+        <IconButton sx={{position: 'absolute', top: 16, right: 16}} onClick={closeModal}>
           <CloseIcon/>
         </IconButton>
         <TextField
@@ -79,18 +117,18 @@ const TaskModal = (props: Props) => {
           {subtask.length !== 0 && <Typography variant="subtitle2" color='gray'>Subtask</Typography>}
           <PerfectScrollbar style={{maxHeight: 152, display: 'flex', flexDirection: 'column', gap: 16 }}>
             {subtask?.map((item, index) => 
-              <Subtask key={index} initVal={item.title} index={index} isCompleted={item.isCompleted} subtask={subtask} setSubtask={setSubtask} />
+              <Subtask key={index} initVal={item.title} index={index} isCompleted={item.isCompleted} subtask={subtask} setSubtask={setSubtask} hasCheckBox={data === undefined ? false: true} />
             )}
           </PerfectScrollbar>
         </Box>
-        <Button size='small' onClick={addMoresubtask} variant='outlined' sx={{ width: 'max-content', alignSelf: 'center', textTransform: 'none' }}>
+        <Button size='small' onClick={addMoreSubtask} variant='outlined' sx={{ width: 'max-content', alignSelf: 'center', textTransform: 'none' }}>
           Add New Subtask
         </Button>
         <Divider sx={{mt: 1}}/>
         <Stack direction='row' gap={2} justifyContent='center'>
           <Button
             disabled={title === '' ? true : false}
-            onClick={addOrUdpateTask}
+            onClick={data === undefined? addNewTask : updateTask}
             variant='contained'
             sx={{ width: 'max-content', alignSelf: 'center', textTransform: 'none' }}>
             {data === undefined ? 'Create' : 'Update'} Task

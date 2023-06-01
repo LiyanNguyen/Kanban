@@ -9,10 +9,11 @@ type Props = {
   isCompleted?: boolean
   subtask: subtask[]
   setSubtask: Dispatch<SetStateAction<subtask[]>>
+  hasCheckBox: boolean
 }
 
 const Subtask = (props: Props) => {
-  const { initVal, index, isCompleted, subtask, setSubtask } = props
+  const { initVal, index, isCompleted, subtask, setSubtask, hasCheckBox } = props
   const [error, setError] = useState<boolean>(false)
   const [value, setValue] = useState<string>('')
   const [checked, setChecked] = useState<boolean | undefined>(false)
@@ -43,9 +44,8 @@ const Subtask = (props: Props) => {
   }
 
   return (
-
     <Stack direction='row' gap={0} alignItems='center'>
-      {initVal !== undefined && <Checkbox checked={checked} size='small' onChange={() => onCheckBoxChange(!checked)} />}
+      {hasCheckBox && <Checkbox checked={checked} size='small' onChange={() => onCheckBoxChange(!checked)} />}
       <TextField
         error={error} fullWidth variant="outlined" value={value} size='small' autoFocus disabled={checked}
         onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
