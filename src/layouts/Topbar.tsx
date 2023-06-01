@@ -4,18 +4,18 @@ import { useState } from 'react';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import AddTaskIcon from '@mui/icons-material/AddTask';
-import TaskModal from '../components/TaskModal';
 import React from 'react';
 import BoardModal from '../components/BoardModal';
 import DeleteModal from '../components/DeleteModal';
 import { boardStore } from '../zustand/boardStore';
+import { modalStore } from '../zustand/modalStore';
 
 const Topbar = () => {
   const [boards, boardIndex] = boardStore((state) => [state.boards, state.boardIndex]);
-  const [openTaskModal, setOpenTaskModal] = useState<boolean>(false);
   const [openBoardModal, setOpenBoardModal] = useState<boolean>(false);
   const [openDeleteModal, setOpenDeleteModal] = useState<boolean>(false);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const [setOpenTaskModal] = modalStore((state) => [state.setOpenTaskModal])
   const openMenu = Boolean(anchorEl);
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -53,7 +53,6 @@ const Topbar = () => {
           </Menu>
         </Box>
       </Stack>
-      <TaskModal openModal={openTaskModal} setOpenModal={setOpenTaskModal} />
       <BoardModal isEditing boardName={boards[boardIndex]} openModal={openBoardModal} setOpenModal={setOpenBoardModal} />
       <DeleteModal type='Board' itemName={boards[boardIndex]} openModal={openDeleteModal} setOpenModal={setOpenDeleteModal} />
     </React.Fragment>

@@ -1,5 +1,5 @@
 import { Modal, TextField, Typography, Stack, Button, Box, IconButton, Divider } from '@mui/material'
-import { Dispatch, SetStateAction, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import Subtask from './Subtask'
 import PerfectScrollbar from 'react-perfect-scrollbar'
 import 'react-perfect-scrollbar/dist/css/styles.css'
@@ -8,6 +8,7 @@ import { task } from '../types/task'
 import CloseIcon from '@mui/icons-material/Close'
 import { v4 as uuidv4 } from 'uuid';
 import { columnStore } from '../zustand/columnStore'
+import { modalStore } from '../zustand/modalStore'
 
 type Props = {
   //if deleting existing task, this is passed
@@ -16,9 +17,6 @@ type Props = {
   // if editing existing task, this is passed
   taskID?: string
   data?: task
-
-  openModal: boolean
-  setOpenModal: Dispatch<SetStateAction<boolean>>
 }
 
 const style = {
@@ -32,14 +30,17 @@ const style = {
 }
 
 const TaskModal = (props: Props) => {
-  const { columnID, taskID, data, openModal, setOpenModal } = props
+  const { columnID, taskID, data } = props
   const [title, setTitle] = useState<string>('')
   const [description, setDescription] = useState<string>('')
   const [error, setError] = useState<boolean>(false)
   const [subtask, setSubtask] = useState<subtask[]>([])
   const [todoColumnID, columns, setColumns] =
-    columnStore((state) =>
+    columnStore((state) => 
       [state.todoColumnID, state.columns, state.setColumns])
+  const [openTaskModal, setOpenTaskModal] =
+    modalStore((state) =>
+      [state.openTaskModal, state.setOpenTaskModal])
 
   useEffect(() => {
     if (data !== undefined) {
@@ -71,7 +72,7 @@ const TaskModal = (props: Props) => {
         }
       })
 
-      setOpenModal(false)
+      setOpenTaskModal(false)
     }
   }
 
@@ -91,7 +92,7 @@ const TaskModal = (props: Props) => {
       }
     })
     
-    setOpenModal(false)
+    setOpenTaskModal(false)
     setTitle('')
     setDescription('')
     setSubtask([])
@@ -112,11 +113,11 @@ const TaskModal = (props: Props) => {
   }
 
   const closeModal = () => {
-    setOpenModal(false)
+    setOpenTaskModal(false)
   }
 
   return (
-    <Modal open={openModal} onClose={closeModal}>
+    <Modal open={openTaskModal} onClose={closeModal}>
       <Stack sx={style} p={4} gap={2}>
         <Typography variant="h6" fontWeight='bold'>{data === undefined ? 'Add New' : 'Edit'} Task</Typography>
         <IconButton sx={{position: 'absolute', top: 16, right: 16}} onClick={closeModal}>

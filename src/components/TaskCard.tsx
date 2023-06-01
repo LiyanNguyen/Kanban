@@ -28,7 +28,7 @@ const TaskCard = (props: Props) => {
           {data?.subtasks?.filter(item => item.isCompleted).length} of {data?.subtasks?.length} subtasks
         </Typography>
       </Stack>
-      <TaskModal columnID={columnID} taskID={id} openModal={openModal} setOpenModal={setOpenModal} data={data}/>
+      {/* <TaskModal columnID={columnID} taskID={id} openModal={openModal} setOpenModal={setOpenModal} data={data}/> */}
     </React.Fragment>
   )
 }
