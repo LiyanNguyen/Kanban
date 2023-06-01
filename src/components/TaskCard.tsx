@@ -4,13 +4,14 @@ import React, { useState } from 'react'
 import { task } from '../types/task'
 
 type Props = {
+  columnID: string
   id: string
   isDragging?: boolean
   data: task
 }
 
 const TaskCard = (props: Props) => {
-  const { id, isDragging, data } = props
+  const { columnID, id, isDragging, data } = props
   const [openModal, setOpenModal] = useState<boolean>(false)
   const [isHovered, setIsHovered] = useState<boolean>(false)
 
@@ -27,7 +28,7 @@ const TaskCard = (props: Props) => {
           {data?.subtasks?.filter(item => item.isCompleted).length} of {data?.subtasks?.length} subtasks
         </Typography>
       </Stack>
-      <TaskModal taskID={id} openModal={openModal} setOpenModal={setOpenModal} data={data}/>
+      <TaskModal columnID={columnID} taskID={id} openModal={openModal} setOpenModal={setOpenModal} data={data}/>
     </React.Fragment>
   )
 }

@@ -16,7 +16,7 @@ type Props = {
 const Column = (props: Props) => {
   const { columnID, column } = props
   const [badgeColor, setBadgeColor] = useState<string>('')
-  const setTodoColumnID = columnStore((state) => state.setTodoColumnID)
+  const [setTodoColumnID] = columnStore((state) => [state.setTodoColumnID])
 
   useEffect(() => {
     if (column.name === 'Todo') {setBadgeColor('#49C4E5'); setTodoColumnID(columnID)}
@@ -38,7 +38,7 @@ const Column = (props: Props) => {
               <Draggable key={item.id} index={index} draggableId={item.id}>
                 {(provided, snapshot) =>
                   <div ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps} style={{ ...provided.draggableProps.style }}>
-                    <TaskCard id={item.id} isDragging={snapshot.isDragging} data={item} />
+                    <TaskCard columnID={columnID} id={item.id} isDragging={snapshot.isDragging} data={item} />
                   </div>
                 }
               </Draggable>

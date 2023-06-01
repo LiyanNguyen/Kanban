@@ -1,8 +1,7 @@
 import { DropResult } from "@hello-pangea/dnd"
 import { column } from "../types/column"
-import { Dispatch, SetStateAction } from "react";
 
-export const onDragEnd = (result: DropResult, columns: column, setColumns: Dispatch<SetStateAction<column>>) => {
+export const onDragEnd = (result: DropResult, columns: column, setColumns: (val: column) => void) => {
   if (!result.destination) return
   const { source, destination } = result
 

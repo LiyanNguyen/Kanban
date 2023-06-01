@@ -6,14 +6,12 @@ import 'react-perfect-scrollbar/dist/css/styles.css'
 import { subtask } from '../types/subtask'
 import { task } from '../types/task'
 import CloseIcon from '@mui/icons-material/Close'
-import { column } from '../types/column'
 import { v4 as uuidv4 } from 'uuid';
 import { columnStore } from '../zustand/columnStore'
 
 type Props = {
-  // if creating new task, this is passed
-  columns?: column
-  setColumns?: Dispatch<SetStateAction<column>>
+  //if deleting existing task, this is passed
+  columnID?: string
 
   // if editing existing task, this is passed
   taskID?: string
@@ -34,12 +32,14 @@ const style = {
 }
 
 const TaskModal = (props: Props) => {
-  const { taskID, data, openModal, setOpenModal, columns, setColumns } = props
+  const { columnID, taskID, data, openModal, setOpenModal } = props
   const [title, setTitle] = useState<string>('')
   const [description, setDescription] = useState<string>('')
   const [error, setError] = useState<boolean>(false)
   const [subtask, setSubtask] = useState<subtask[]>([])
-  const todoColumnID = columnStore((state) => state.todoColumnID)
+  const [todoColumnID, columns, setColumns] =
+    columnStore((state) =>
+      [state.todoColumnID, state.columns, state.setColumns])
 
   useEffect(() => {
     if (data !== undefined) {
@@ -70,20 +70,32 @@ const TaskModal = (props: Props) => {
       subtasks: subtask,
     }
 
-    if (setColumns && columns !== undefined) {
-      setColumns({
-        ...columns,
-        [todoColumnID]: {
-          ...columns[todoColumnID],
-          tasks: [newTodoTask, ...columns[todoColumnID].tasks]
-        }
-      })
-    }
-
+    setColumns({
+      ...columns,
+      [todoColumnID]: {
+        ...columns[todoColumnID],
+        tasks: [newTodoTask, ...columns[todoColumnID].tasks]
+      }
+    })
+    
     setOpenModal(false)
     setTitle('')
     setDescription('')
     setSubtask([])
+  }
+
+  const deleteTask = () => {
+    if (columnID !== undefined) {
+      const newTaskArrayAfterDelete = columns[columnID].tasks.filter(item => item.id !== taskID)
+
+      setColumns({
+        ...columns,
+        [columnID]: {
+          ...columns[columnID],
+          tasks: newTaskArrayAfterDelete
+        }
+      })
+    }    
   }
 
   const closeModal = () => {
@@ -135,6 +147,7 @@ const TaskModal = (props: Props) => {
           </Button>
           {data !== undefined &&
             <Button
+              onClick={deleteTask}
               variant='contained'
               color='error'
               sx={{ width: 'max-content', alignSelf: 'center', textTransform: 'none' }}

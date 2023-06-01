@@ -1,18 +1,13 @@
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { DragDropContext } from "@hello-pangea/dnd"
 import { Stack } from '@mui/material';
-import { column } from "../types/column";
 import EmptyBoard from "../components/EmptyBoard";
 import Column from "../components/Column";
 import { onDragEnd } from "../utils/OnDragEnd";
+import { columnStore } from "../zustand/columnStore";
 
-type Props = {
-  columns: column
-  setColumns: Dispatch<SetStateAction<column>>
-}
-
-const Board = (props: Props) => {
-  const {columns, setColumns} = props
+const Board = () => {
+  const [columns, setColumns] = columnStore((state) => [state.columns, state.setColumns])
   const [isEmpty, setIsEmpty] = useState<boolean>(false)
 
   useEffect(() => {
