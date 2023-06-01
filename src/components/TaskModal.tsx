@@ -54,12 +54,25 @@ const TaskModal = (props: Props) => {
   }
 
   const updateTask = () => {
-    console.log({
-      id: taskID,
-      title: title,
-      description: description,
-      subtasks: subtask,
-    })
+    if (columnID !== undefined) {
+      const taskArray = columns[columnID].tasks
+      const itemIndex = columns[columnID].tasks.findIndex(item => item.id === taskID)
+      const taskItem = taskArray[itemIndex]
+
+      taskItem.title = title
+      taskItem.description = description
+      taskItem.subtasks = subtask
+
+      setColumns({
+        ...columns,
+        [columnID]: {
+          ...columns[columnID],
+          tasks: taskArray
+        }
+      })
+
+      setOpenModal(false)
+    }
   }
 
   const addNewTask = () => {
