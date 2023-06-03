@@ -1,10 +1,8 @@
 import CreateTaskModal from "./components/CreateTaskModal";
-import ViewTaskModal from "./components/ViewTaskModal";
 import Board from "./layouts/Board"
 import Sidebar from "./layouts/Sidebar"
 import Topbar from "./layouts/Topbar"
 import { Stack } from '@mui/material';
-
 
 const App = () => {
   return (
@@ -17,7 +15,6 @@ const App = () => {
         </Stack>
       </Stack>
       <CreateTaskModal />
-      <ViewTaskModal />
     </>
   )
 }
