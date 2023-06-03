@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction, useEffect, useState, } from 'react'
-import { Stack, Checkbox, Box, Typography, FormLabel, FormControlLabel } from '@mui/material';
+import { Checkbox, Box, Typography, FormControlLabel } from '@mui/material';
 import { subtask } from '../types/subtask';
 
 type Props = {
