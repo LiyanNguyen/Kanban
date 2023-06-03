@@ -13,7 +13,7 @@ const TodoTasks: task[] = [
         isCompleted: false
       },
       {
-        title: "Review common customer pain points and suggestions",
+        title: "Review common customer pain points",
         isCompleted: false
       },
       {

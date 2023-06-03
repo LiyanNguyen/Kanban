@@ -26,7 +26,7 @@ const Column = (props: Props) => {
 
   
   return (
-    <Stack width={280} gap={2}>
+    <Stack width={350} gap={2}>
       <Stack direction='row' gap={1.5}>
         <Box width={15} height={15} borderRadius='50%' bgcolor={badgeColor} />
         <Typography color='#828FA3' textTransform='uppercase' fontWeight='bold' fontSize={12}>{column.name} ({column.tasks.length})</Typography>

@@ -1,5 +1,5 @@
 import React, { Dispatch, SetStateAction, useEffect, useState,  } from 'react'
-import { TextField, IconButton, InputAdornment, Stack, Checkbox } from '@mui/material';
+import { TextField, IconButton, InputAdornment, Stack } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import { subtask } from '../types/subtask';
 
@@ -9,11 +9,10 @@ type Props = {
   isCompleted?: boolean
   subtask: subtask[]
   setSubtask: Dispatch<SetStateAction<subtask[]>>
-  hasCheckBox: boolean
 }
 
-const Subtask = (props: Props) => {
-  const { initVal, index, isCompleted, subtask, setSubtask, hasCheckBox } = props
+const SubtaskInput = (props: Props) => {
+  const { initVal, index, isCompleted, subtask, setSubtask } = props
   const [error, setError] = useState<boolean>(false)
   const [value, setValue] = useState<string>('')
   const [checked, setChecked] = useState<boolean | undefined>(false)
@@ -36,16 +35,8 @@ const Subtask = (props: Props) => {
     setSubtask(data)
   }
 
-  const onCheckBoxChange = (val: boolean) => {
-    setChecked(prev => !prev)
-    const data = [...subtask];
-    data[index].isCompleted = val
-    setSubtask(data);
-  }
-
   return (
     <Stack direction='row' gap={0} alignItems='center'>
-      {hasCheckBox && <Checkbox checked={checked} size='small' onChange={() => onCheckBoxChange(!checked)} />}
       <TextField
         multiline 
         error={error} fullWidth variant="outlined" value={value} size='small' autoFocus disabled={checked}
@@ -58,11 +49,9 @@ const Subtask = (props: Props) => {
         InputProps={{
           endAdornment: ( 
             <InputAdornment position="end">
-              {!hasCheckBox &&
-                <IconButton onClick={deleteThisInput} color='error' sx={{ padding: 0 }}>
-                  <CloseIcon fontSize='small' />
-                </IconButton>
-              }
+              <IconButton onClick={deleteThisInput} color='error' sx={{ padding: 0 }}>
+                <CloseIcon fontSize='small' />
+              </IconButton>
             </InputAdornment>
           )
         }}
@@ -71,4 +60,4 @@ const Subtask = (props: Props) => {
   )
 }
 
-export default Subtask 
+export default SubtaskInput 

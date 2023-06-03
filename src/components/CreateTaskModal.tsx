@@ -1,6 +1,6 @@
-import { Modal, TextField, Typography, Stack, Button, Box, IconButton, Divider } from '@mui/material'
+import { Modal, TextField, Typography, Stack, Button, Box, IconButton, Divider, Tooltip } from '@mui/material'
 import { useState } from 'react'
-import Subtask from './Subtask'
+import SubtaskInput from './SubtaskInput'
 import PerfectScrollbar from 'react-perfect-scrollbar'
 import 'react-perfect-scrollbar/dist/css/styles.css'
 import { subtask } from '../types/subtask'
@@ -66,9 +66,11 @@ const CreateTaskModal = () => {
     <Modal open={openTaskModal} onClose={closeModal}>
       <Stack sx={style} p={4} gap={2}>
         <Typography variant="h6" fontWeight='bold'>Add New Task</Typography>
-        <IconButton sx={{position: 'absolute', top: 16, right: 16}} onClick={closeModal}>
-          <CloseIcon/>
-        </IconButton>
+        <Tooltip title="Close">
+          <IconButton sx={{position: 'absolute', top: 16, right: 16}} onClick={closeModal}>
+            <CloseIcon/>
+          </IconButton>
+        </Tooltip>
         <TextField
           error={false} label='Title' fullWidth variant="outlined" value={title}
           onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
@@ -89,7 +91,7 @@ const CreateTaskModal = () => {
           {subtask.length !== 0 && <Typography mb={1} variant="subtitle2" color='#828FA3'>Subtask ({subtask.length})</Typography>}
           <PerfectScrollbar style={{maxHeight: 152, display: 'flex', flexDirection: 'column', gap: 16 }}>
             {subtask?.map((item, index) => 
-              <Subtask key={index} initVal={item.title} index={index} isCompleted={item.isCompleted} subtask={subtask} setSubtask={setSubtask} hasCheckBox={false} />
+              <SubtaskInput key={index} initVal={item.title} index={index} isCompleted={item.isCompleted} subtask={subtask} setSubtask={setSubtask} />
             )}
           </PerfectScrollbar>
         </Box>
