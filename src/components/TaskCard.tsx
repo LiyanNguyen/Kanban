@@ -4,6 +4,7 @@ import { task } from '../types/task'
 import ViewTaskModal from './ViewTaskModal'
 
 type Props = {
+  columnName: string
   columnID: string
   id: string
   isDragging?: boolean
@@ -11,7 +12,7 @@ type Props = {
 }
 
 const TaskCard = (props: Props) => {
-  const { columnID, id, isDragging, data } = props
+  const { columnName, columnID, id, isDragging, data } = props
   const [isHovered, setIsHovered] = useState<boolean>(false)
   const [open, setOpen] = useState<boolean>(false)
 
@@ -26,10 +27,10 @@ const TaskCard = (props: Props) => {
       >
         <Typography  sx={{wordWrap: 'break-word'}} color={isHovered? '#635FC7' : '#000112' }fontSize={15} fontWeight='bold'>{data.title}</Typography>
         <Typography color='#828FA3' fontSize={12} fontWeight='bold'>
-          {data?.subtasks?.filter(item => item.isCompleted).length} of {data?.subtasks?.length} subtasks
+          Subtask: {data?.subtasks?.filter(item => item.isCompleted).length} / {data?.subtasks?.length}
         </Typography>
       </Stack>
-      <ViewTaskModal columnID={columnID} id={id} data={data} open={open} setOpen={setOpen} />
+      <ViewTaskModal columnName={columnName} columnID={columnID} id={id} data={data} open={open} setOpen={setOpen} />
     </>
   )
 }

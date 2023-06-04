@@ -1,4 +1,5 @@
 import CreateTaskModal from "./components/CreateTaskModal";
+import DeleteSuccessSnackbar from "./components/DeleteSuccessSnackbar";
 import Board from "./layouts/Board"
 import Sidebar from "./layouts/Sidebar"
 import Topbar from "./layouts/Topbar"
@@ -15,6 +16,7 @@ const App = () => {
         </Stack>
       </Stack>
       <CreateTaskModal />
+      <DeleteSuccessSnackbar/>
     </>
   )
 }

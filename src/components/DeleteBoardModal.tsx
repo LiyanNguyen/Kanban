@@ -20,12 +20,12 @@ const style = {
   borderRadius: 1.5
 };
 
-const DeleteModal = (props: Props) => {
+const DeleteBoardModal = (props: Props) => {
   const { type, itemName, openModal, setOpenModal } = props
 
 
   return (
-    <Modal open={openModal} onClose={() => setOpenModal(false)}>
+    <Modal disableAutoFocus open={openModal} onClose={() => setOpenModal(false)}>
       <Stack sx={style} p={4} gap={2}>
         <IconButton sx={{ position: 'absolute', top: 16, right: 16 }} onClick={() => setOpenModal(false)}>
           <CloseIcon />
@@ -43,4 +43,4 @@ const DeleteModal = (props: Props) => {
   )
 }
 
-export default DeleteModal
+export default DeleteBoardModal

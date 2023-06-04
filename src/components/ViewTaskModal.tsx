@@ -7,9 +7,11 @@ import { subtask } from '../types/subtask'
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { task } from '../types/task'
 import { columnStore } from '../zustand/columnStore'
+import { snackbarStore } from '../zustand/snackbarStore'
 import SubtaskItem from './SubtaskItem'
 
 type Props = {
+  columnName: string
   columnID: string
   id: string
   data: task
@@ -28,11 +30,13 @@ const style = {
 }
 
 const ViewTaskModal = (props: Props) => {
-  const { columnID, id, data, open, setOpen } = props
+  const { columnName, columnID, id, data, open, setOpen } = props
   const [title, setTitle] = useState<string>('')
   const [description, setDescription] = useState<string>('')
   const [subtask, setSubtask] = useState<subtask[]>([])
   const [completeCount, setCompleteCount] = useState<number>(0)
+  const [statusColor, setStatusColor] = useState<string>('')
+  const [setOpenSnackbar] = snackbarStore((state) => [state.setOpenSnackbar])
   const [columns, setColumns] =
     columnStore((state) =>
       [state.columns, state.setColumns])
@@ -48,7 +52,13 @@ const ViewTaskModal = (props: Props) => {
   useEffect(() => {
     const count = subtask.reduce((total, item) => item.isCompleted === true ? total + 1 : total, 0)
     setCompleteCount(count)
-  },[subtask])
+  }, [subtask])
+  
+  useEffect(() => {
+    if (columnName === 'Todo') setStatusColor('#49C4E5')
+    if (columnName === 'Doing') setStatusColor('#8471F2')
+    if (columnName === 'Done') setStatusColor('#67E2AE')
+  }, [columnName])
 
 
   const deleteTask = () => {
@@ -62,11 +72,13 @@ const ViewTaskModal = (props: Props) => {
           tasks: newTaskArrayAfterDelete
         }
       })
+
+      setOpenSnackbar(true)
     }
   }
 
   return (
-    <Modal open={open} onClose={() => setOpen(false)}>
+    <Modal disableAutoFocus open={open} onClose={() => setOpen(false)}>
       <Stack sx={style} p={4} gap={2}>
         <Typography variant="h6" fontWeight='bold' color='#000112'>{title}</Typography>
         <Tooltip title="Close">
@@ -76,7 +88,7 @@ const ViewTaskModal = (props: Props) => {
         </Tooltip>
         <Typography variant='subtitle2' color='#828FA3'>{description}</Typography>
         <Box>
-          {subtask.length !== 0 && <Typography mb={1} variant="subtitle2" color='#828FA3'>Subtask ({completeCount} of {subtask.length})</Typography>}
+          {subtask.length !== 0 && <Typography mb={1} variant="subtitle2" color='#828FA3'>Subtask: {completeCount} / {subtask.length}</Typography>}
           <PerfectScrollbar style={{ maxHeight: 202, display: 'flex', flexDirection: 'column', gap: 8 }}>
             {subtask?.map((item, index) =>
               <SubtaskItem key={index} title={item.title} index={index} isCompleted={item.isCompleted} subtask={subtask} setSubtask={setSubtask} />
@@ -85,7 +97,11 @@ const ViewTaskModal = (props: Props) => {
         </Box>
         <Divider />
         <Stack direction='row' justifyContent='space-between' alignItems='center'>
-          <Typography variant='subtitle2' color='#828FA3'>Current Status: Doing</Typography>
+          <Typography variant='subtitle2' color='#828FA3'>Current Status:&nbsp;
+            <span style={{ color: statusColor, fontWeight: 'bold' }}>
+              {columnName}
+            </span>
+          </Typography>
           <Tooltip title="Delete Task">
             <IconButton
               onClick={deleteTask}

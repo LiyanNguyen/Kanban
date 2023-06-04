@@ -63,7 +63,7 @@ const CreateTaskModal = () => {
   }
 
   return (
-    <Modal open={openTaskModal} onClose={closeModal}>
+    <Modal disableAutoFocus open={openTaskModal} onClose={closeModal}>
       <Stack sx={style} p={4} gap={2}>
         <Typography variant="h6" fontWeight='bold'>Add New Task</Typography>
         <Tooltip title="Close">

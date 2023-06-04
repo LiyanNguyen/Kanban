@@ -6,7 +6,7 @@ import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import AddTaskIcon from '@mui/icons-material/AddTask';
 import React from 'react';
 import BoardModal from '../components/BoardModal';
-import DeleteModal from '../components/DeleteModal';
+import DeleteBoardModal from '../components/DeleteBoardModal';
 import { boardStore } from '../zustand/boardStore';
 import { modalStore } from '../zustand/modalStore';
 
@@ -54,7 +54,7 @@ const Topbar = () => {
         </Box>
       </Stack>
       <BoardModal isEditing boardName={boards[boardIndex]} openModal={openBoardModal} setOpenModal={setOpenBoardModal} />
-      <DeleteModal type='Board' itemName={boards[boardIndex]} openModal={openDeleteModal} setOpenModal={setOpenDeleteModal} />
+      <DeleteBoardModal type='Board' itemName={boards[boardIndex]} openModal={openDeleteModal} setOpenModal={setOpenDeleteModal} />
     </React.Fragment>
   )
 }

@@ -38,7 +38,7 @@ const Column = (props: Props) => {
               <Draggable key={item.id} index={index} draggableId={item.id}>
                 {(provided, snapshot) =>
                   <div  ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps} style={{ ...provided.draggableProps.style }}>
-                    <TaskCard columnID={columnID} id={item.id} isDragging={snapshot.isDragging} data={item} />
+                    <TaskCard columnName={column.name} columnID={columnID} id={item.id} isDragging={snapshot.isDragging} data={item} />
                   </div>
                 }
               </Draggable>
