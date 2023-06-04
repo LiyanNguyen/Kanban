@@ -11,7 +11,10 @@ const Board = () => {
   const [isEmpty, setIsEmpty] = useState<boolean>(false)
 
   useEffect(() => {
-    if (columns.length === null) setIsEmpty(true)
+    const taskCountArray = Object.entries(columns).map(([, column]) => column.tasks.length)
+    const tasksCount = taskCountArray.reduce((total, item) => total + item, 0)
+
+    if (tasksCount === 0) setIsEmpty(true)
     else setIsEmpty(false)
 
   }, [columns])
