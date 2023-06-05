@@ -1,4 +1,4 @@
-import { Modal, TextField, Typography, Stack, Button, IconButton } from '@mui/material'
+import { Modal, TextField, Typography, Stack, Button, IconButton, SxProps, Theme } from '@mui/material'
 import { Dispatch, SetStateAction, useEffect, useState } from 'react'
 import CloseIcon from '@mui/icons-material/Close';
 import { boardStore } from '../zustand/boardStore';
@@ -10,7 +10,7 @@ type Props = {
   setOpenModal: Dispatch<SetStateAction<boolean>>
 }
 
-const style = {
+const style: SxProps<Theme> = {
   position: 'absolute',
   top: '50%',
   left: '50%',

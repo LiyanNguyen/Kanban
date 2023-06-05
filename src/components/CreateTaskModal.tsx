@@ -1,4 +1,4 @@
-import { Modal, TextField, Typography, Stack, Button, Box, IconButton, Divider, Tooltip } from '@mui/material'
+import { Modal, TextField, Typography, Stack, Button, Box, IconButton, Divider, Tooltip, SxProps, Theme } from '@mui/material'
 import { useState } from 'react'
 import SubtaskInput from './SubtaskInput'
 import PerfectScrollbar from 'react-perfect-scrollbar'
@@ -9,7 +9,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { columnStore } from '../zustand/columnStore'
 import { modalStore } from '../zustand/modalStore'
 
-const style = {
+const style: SxProps<Theme> = {
   position: 'absolute',
   top: '50%',
   left: '50%',
