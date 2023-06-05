@@ -1,4 +1,4 @@
-import { Box, Stack, Typography } from '@mui/material'
+import { Box, Stack, SxProps, Theme, Typography } from '@mui/material'
 import TaskCard from './TaskCard'
 import { useEffect, useState } from 'react'
 import { Draggable, Droppable } from '@hello-pangea/dnd'
@@ -11,6 +11,22 @@ type Props = {
     name: string
     tasks: task[]
   }
+}
+
+const style: SxProps<Theme> = {
+  height: '100%',
+  overflowY: 'scroll',
+  "&::-webkit-scrollbar": {
+    width: 5,
+    borderRadius: 5
+  },
+  "&::-webkit-scrollbar-track": {
+    backgroundColor: "none"
+  },
+  "&::-webkit-scrollbar-thumb": {
+    backgroundColor: "#E4EBFA",
+    borderRadius: 5,
+  },
 }
 
 const Column = (props: Props) => {
@@ -33,18 +49,20 @@ const Column = (props: Props) => {
       </Stack>
       <Droppable droppableId={columnID} key={columnID}>
         {(provided, snapshot) =>
-          <Stack bgcolor={snapshot.isDraggingOver ? '#E9EFFA' : 'none'} ref={provided.innerRef} {...provided.droppableProps} height='100%'>
-            {column.tasks.map((item: task, index: number) =>
-              <Draggable key={item.id} index={index} draggableId={item.id}>
-                {(provided, snapshot) =>
-                  <div  ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps} style={{ ...provided.draggableProps.style }}>
-                    <TaskCard columnName={column.name} columnID={columnID} id={item.id} isDragging={snapshot.isDragging} data={item} />
-                  </div>
-                }
-              </Draggable>
-            )}
-            {provided.placeholder}
-          </Stack>
+          <>
+            <Stack bgcolor={snapshot.isDraggingOver ? '#E9EFFA' : 'none'} ref={provided.innerRef} {...provided.droppableProps} sx={style}>
+              {column.tasks.map((item: task, index: number) =>
+                <Draggable key={item.id} index={index} draggableId={item.id}>
+                  {(provided, snapshot) =>
+                    <div  ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps} style={{ ...provided.draggableProps.style }}>
+                      <TaskCard columnName={column.name} columnID={columnID} id={item.id} isDragging={snapshot.isDragging} data={item} />
+                    </div>
+                  }
+                </Draggable>
+              )}
+              {provided.placeholder}
+            </Stack>
+          </>
         }
       </Droppable>
     </Stack>

@@ -56,6 +56,63 @@ const TodoTasks: task[] = [
       },
     ]
   },
+  {
+    id: uuidv4(),
+    title: "Plan Product Hunt launch",
+    description: "",
+    subtasks: [
+      {
+        title: "Find hunter",
+        isCompleted: false
+      },
+      {
+        title: "Gather assets",
+        isCompleted: false
+      },
+      {
+        title: "Draft product page",
+        isCompleted: false
+      },
+      {
+        title: "Notify customers",
+        isCompleted: false
+      },
+      {
+        title: "Notify network",
+        isCompleted: false
+      },
+      {
+        title: "Launch!",
+        isCompleted: false
+      }
+    ]
+  },
+  {
+    id: uuidv4(),
+    "title": "Build UI for search",
+    "description": "",
+    "subtasks": [
+      {
+        "title": "Search page",
+        "isCompleted": false
+      }
+    ]
+  },
+  {
+    id: uuidv4(),
+    "title": "Build settings UI",
+    "description": "",
+    "subtasks": [
+      {
+        "title": "Account page",
+        "isCompleted": false
+      },
+      {
+        "title": "Billing page",
+        "isCompleted": false
+      }
+    ]
+  },
 ]
 
 export default TodoTasks
