@@ -21,11 +21,14 @@ const TaskCard = (props: Props) => {
       <Stack
         onMouseLeave={() => setIsHovered(false)} onMouseEnter={() => setIsHovered(true)}
         onClick={() => setOpen(true)}
-        sx={{ cursor: 'pointer', opacity: isDragging? 0.75 : 1 }}
+        sx={{ cursor: 'grab', opacity: isDragging? 0.75 : 1 }}
         px={2} py={3} bgcolor='white' borderRadius={1} mb={2}
         boxShadow={'0px 4px 6px rgba(54, 78, 126, 0.101545)'}
       >
-        <Typography  sx={{wordWrap: 'break-word'}} color={isHovered? '#635FC7' : '#000112' }fontSize={15} fontWeight='bold'>{data.title}</Typography>
+        <Typography
+          sx={{ wordWrap: 'break-word', cursor: 'pointer' }}
+          color={isHovered ? '#635FC7' : '#000112'}
+          fontSize={15} fontWeight='bold'>{data.title}</Typography>
         <Typography color='#828FA3' fontSize={12} fontWeight='bold'>
           Subtask: {data?.subtasks?.filter(item => item.isCompleted).length} / {data?.subtasks?.length}
         </Typography>
