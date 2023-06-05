@@ -14,7 +14,7 @@ type Props = {
 }
 
 const style: SxProps<Theme> = {
-  height: '100%',
+  height: [200,'100%'],
   overflowY: 'scroll',
   "&::-webkit-scrollbar": {
     width: 5,
@@ -40,9 +40,8 @@ const Column = (props: Props) => {
     if (column.name === 'Done') setBadgeColor('#67E2AE')
   }, [column.name, columnID, setTodoColumnID])
 
-  
   return (
-    <Stack width={350} gap={2}>
+    <Stack width={['100%', 350]} gap={2}>
       <Stack direction='row' gap={1.5}>
         <Box width={15} height={15} borderRadius='50%' bgcolor={badgeColor} />
         <Typography color='#828FA3' textTransform='uppercase' fontWeight='bold' fontSize={12}>{column.name} ({column.tasks.length})</Typography>

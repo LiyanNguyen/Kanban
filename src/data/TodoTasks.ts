@@ -24,40 +24,6 @@ const TodoTasks: task[] = [
   },
   {
     id: uuidv4(),
-    title: "Design settings and search pages",
-    description: "",
-    subtasks: [
-      {
-        title: "Settings - Account page",
-        isCompleted: false
-      },
-      {
-        title: "Settings - Billing page",
-        isCompleted: false
-      },
-      {
-        title: "Search page",
-        isCompleted: false
-      }
-    ]
-  },
-  {
-    id: uuidv4(),
-    title: "Research the market",
-    description: "We need to get a solid overview of the market to ensure we have up-to-date estimates of market size and demand.",
-    subtasks: [
-      {
-        title: "Write up research analysis",
-        isCompleted: false
-      },
-      {
-        title: "Calculate TAM",
-        isCompleted: false
-      },
-    ]
-  },
-  {
-    id: uuidv4(),
     title: "Plan Product Hunt launch",
     description: "",
     subtasks: [

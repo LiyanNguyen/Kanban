@@ -20,7 +20,7 @@ const Board = () => {
   }, [columns])
 
   return (
-    <Stack direction='row' bgcolor='#F4F7FD' sx={{ height: 'calc(100vh - 100px)' }} justifyContent={isEmpty ? 'center' : 'flex-start'} p={3} gap={3}>
+    <Stack direction={['column', 'row']} bgcolor='#F4F7FD' height={['max-content', 'calc(100vh - 85px)']} justifyContent={isEmpty ? 'center' : 'flex-start'} p={3} gap={3}>
       {isEmpty ? <EmptyBoard /> :
         <DragDropContext onDragEnd={result => onDragEnd(result, columns, setColumns)}>
           {Object.entries(columns).map(([columnID, column]) =>

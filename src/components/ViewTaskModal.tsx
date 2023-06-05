@@ -1,4 +1,4 @@
-import { Modal, Stack, Typography, IconButton, Box,  Divider, Tooltip } from '@mui/material'
+import { Modal, Stack, Typography, IconButton, Box,  Divider, Tooltip, SxProps, Theme } from '@mui/material'
 import { Dispatch, SetStateAction, useEffect, useState } from 'react'
 import CloseIcon from '@mui/icons-material/Close'
 import PerfectScrollbar from 'react-perfect-scrollbar'
@@ -19,12 +19,12 @@ type Props = {
   setOpen: Dispatch<SetStateAction<boolean>>
 }
 
-const style = {
+const style: SxProps<Theme> = {
   position: 'absolute',
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  width: 480,
+  width: ['90%',480],
   bgcolor: 'white',
   borderRadius: 1.5
 }
