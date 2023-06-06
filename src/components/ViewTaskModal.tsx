@@ -67,15 +67,17 @@ const ViewTaskModal = (props: Props) => {
             <CloseIcon fontSize='small' />
           </IconButton>
         </Tooltip>
-        <Typography variant='subtitle2' color='#828FA3'>{data.description}</Typography>
-        <Box>
-          {subtask.length !== 0 && <Typography mb={1} variant="subtitle2" color='#828FA3'>Subtask: {completeCount} / {subtask.length}</Typography>}
-          <PerfectScrollbar style={{ maxHeight: 202, display: 'flex', flexDirection: 'column', gap: 8 }}>
-            {subtask?.map((item, index) =>
-              <SubtaskItem key={index} title={item.title} index={index} isCompleted={item.isCompleted} subtask={subtask} setSubtask={setSubtask} />
-            )}
-          </PerfectScrollbar>
-        </Box>
+        {data.description !== '' && <Typography variant='subtitle2' color='#828FA3'>{data.description}</Typography>}
+        {subtask.length !== 0 &&
+          <Box>
+            <Typography mb={1} variant="subtitle2" color='#828FA3'>Subtask: {completeCount} / {subtask.length}</Typography>
+            <PerfectScrollbar style={{ maxHeight: 202, display: 'flex', flexDirection: 'column', gap: 8 }}>
+              {subtask?.map((item, index) =>
+                <SubtaskItem key={index} title={item.title} index={index} isCompleted={item.isCompleted} subtask={subtask} setSubtask={setSubtask} />
+              )}
+            </PerfectScrollbar>
+          </Box>
+        }
         <Divider />
         <Stack direction='row' justifyContent='space-between' alignItems='center'>
           <Stack gap={0.5}>

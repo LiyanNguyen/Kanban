@@ -37,7 +37,7 @@ const CreateTaskModal = () => {
         id: uuidv4(),
         title: title,
         description: description,
-        subtasks: subtask,
+        subtasks: subtask.filter(item => item.title !== ''),
         assignee: selectedUser
       }
 

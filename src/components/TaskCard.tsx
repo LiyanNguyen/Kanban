@@ -30,9 +30,11 @@ const TaskCard = (props: Props) => {
           sx={{ wordWrap: 'break-word', cursor: 'pointer' }}
           color={isHovered ? '#635FC7' : '#000112'}
           fontWeight='bold'>{data.title}</Typography>
-        <Typography color='#828FA3' variant='subtitle2' fontWeight='bold'>
-          Subtask: {data?.subtasks?.filter(item => item.isCompleted).length} / {data?.subtasks?.length}
-        </Typography>
+        {data.subtasks.length > 0 && 
+          <Typography color='#828FA3' variant='subtitle2' fontWeight='bold'>
+            Subtask: {data.subtasks.filter(item => item.isCompleted).length} / {data.subtasks.length}
+          </Typography>
+        }
         <Stack direction='row' gap={1} alignItems='center'>
           <Avatar src={data.assignee.picture} alt={data.assignee.name} sx={{ width: 28, height: 28 }} />
           <Typography color='#828FA3' variant='subtitle2'>{data.assignee.name}</Typography>
