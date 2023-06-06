@@ -20,7 +20,11 @@ const TodoTasks: task[] = [
         title: "Outline next steps for our roadmap",
         isCompleted: false
       }
-    ]
+    ],
+    assignee: {
+      picture: 'https://randomuser.me/api/portraits/men/32.jpg',
+      name: 'Henriette Balistreri' 
+    }
   },
   {
     id: uuidv4(),
@@ -51,7 +55,11 @@ const TodoTasks: task[] = [
         title: "Launch!",
         isCompleted: false
       }
-    ]
+    ],
+    assignee: {
+      picture: 'https://randomuser.me/api/portraits/men/33.jpg',
+      name: 'Jaren Parisian' 
+    }
   },
   {
     id: uuidv4(),
@@ -62,7 +70,11 @@ const TodoTasks: task[] = [
         "title": "Search page",
         "isCompleted": false
       }
-    ]
+    ],
+    assignee: {
+      picture: 'https://randomuser.me/api/portraits/women/34.jpg',
+      name: 'Jazmin Aufderhar' 
+    }
   },
   {
     id: uuidv4(),
@@ -77,7 +89,11 @@ const TodoTasks: task[] = [
         "title": "Billing page",
         "isCompleted": false
       }
-    ]
+    ],
+    assignee: {
+      picture: 'https://randomuser.me/api/portraits/women/35.jpg',
+      name: 'Jewel Altenwerth' 
+    }
   },
 ]
 

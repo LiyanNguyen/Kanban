@@ -1,4 +1,4 @@
-import { Modal, TextField, Typography, Stack, Button, Box, IconButton, Divider, Tooltip, SxProps, Theme } from '@mui/material'
+import { Modal, TextField, Typography, Stack, Button, Box, IconButton, Divider, Tooltip, Autocomplete } from '@mui/material'
 import { useState } from 'react'
 import SubtaskInput from './SubtaskInput'
 import PerfectScrollbar from 'react-perfect-scrollbar'
@@ -8,22 +8,17 @@ import CloseIcon from '@mui/icons-material/Close'
 import { v4 as uuidv4 } from 'uuid';
 import { columnStore } from '../zustand/columnStore'
 import { modalStore } from '../zustand/modalStore'
-
-const style: SxProps<Theme> = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: 480,
-  bgcolor: 'white',
-  borderRadius: 1.5
-}
+import { task } from '../types/task'
+import { UserList } from '../data/UserList'
+import { user } from '../types/user'
+import { modalStyle } from '../styles/modalStyle'
 
 const CreateTaskModal = () => {
   const [title, setTitle] = useState<string>('')
   const [description, setDescription] = useState<string>('')
   const [error, setError] = useState<boolean>(false)
   const [subtask, setSubtask] = useState<subtask[]>([])
+  const [selectedUser, setSelectedUser] = useState<user | null>(null)
   const [todoColumnID, columns, setColumns] =
     columnStore((state) => 
       [state.todoColumnID, state.columns, state.setColumns])
@@ -37,25 +32,29 @@ const CreateTaskModal = () => {
   }
 
   const addNewTask = () => {
-    const newTodoTask = {
-      id: uuidv4(),
-      title: title,
-      description: description,
-      subtasks: subtask,
-    }
-
-    setColumns({
-      ...columns,
-      [todoColumnID]: {
-        ...columns[todoColumnID],
-        tasks: [newTodoTask, ...columns[todoColumnID].tasks]
+    if (selectedUser !== null) {
+      const newTodoTask: task = {
+        id: uuidv4(),
+        title: title,
+        description: description,
+        subtasks: subtask,
+        assignee: selectedUser
       }
-    })
-    
-    setOpenTaskModal(false)
-    setTitle('')
-    setDescription('')
-    setSubtask([])
+
+      setColumns({
+        ...columns,
+        [todoColumnID]: {
+          ...columns[todoColumnID],
+          tasks: [newTodoTask, ...columns[todoColumnID].tasks]
+        }
+      })
+
+      setOpenTaskModal(false)
+      setTitle('')
+      setDescription('')
+      setSubtask([])
+      setSelectedUser(null)
+    }
   }
 
   const closeModal = () => {
@@ -64,11 +63,11 @@ const CreateTaskModal = () => {
 
   return (
     <Modal disableAutoFocus open={openTaskModal} onClose={closeModal}>
-      <Stack sx={style} p={4} gap={2}>
+      <Stack sx={modalStyle} p={4} gap={2}>
         <Typography variant="h6" fontWeight='bold'>Add New Task</Typography>
         <Tooltip title="Close">
-          <IconButton sx={{position: 'absolute', top: 16, right: 16}} onClick={closeModal}>
-            <CloseIcon/>
+          <IconButton sx={{ position: 'absolute', top: 8, right: 8 }} onClick={closeModal}>
+            <CloseIcon fontSize='small' />
           </IconButton>
         </Tooltip>
         <TextField
@@ -98,10 +97,23 @@ const CreateTaskModal = () => {
         <Button size='small' onClick={addMoreSubtask} variant='outlined' sx={{ width: 'max-content', alignSelf: 'center', textTransform: 'none' }}>
           Add New Subtask
         </Button>
+        <Autocomplete
+          size='small'
+          fullWidth
+          options={UserList}
+          value={selectedUser}
+          getOptionLabel={(option: user) => option.name}
+          onChange={(_event, newValue: user | null) => {
+            setSelectedUser(newValue)
+          }}
+          renderInput={(params) => (
+            <TextField {...params} label='Assignee'/>
+          )}
+        />
         <Divider sx={{mt: 1}}/>
         <Stack direction='row' gap={2} justifyContent='center'>
           <Button
-            disabled={title === '' ? true : false}
+            disabled={title === '' || selectedUser === null ? true : false}
             onClick={addNewTask}
             variant='contained'
             sx={{ width: 'max-content', alignSelf: 'center', textTransform: 'none' }}>

@@ -20,7 +20,11 @@ const DoingTasks: task[] = [
         "title": "Search page",
         "isCompleted": false
       }
-    ]
+    ],
+    assignee: {
+      picture: 'https://randomuser.me/api/portraits/men/36.jpg',
+      name: 'Cale Hills' 
+    }
   },
   {
     id: uuidv4(),
@@ -39,7 +43,11 @@ const DoingTasks: task[] = [
         "title": "Update payment method",
         "isCompleted": false
       }
-    ]
+    ],
+    assignee: {
+      picture: 'https://randomuser.me/api/portraits/men/37.jpg',
+      name: 'Fredy Satterfield'
+    }
   },
   {
     id: uuidv4(),
@@ -58,7 +66,11 @@ const DoingTasks: task[] = [
         "title": "Welcome page",
         "isCompleted": false
       }
-    ]
+    ],
+    assignee: {
+      picture: 'https://randomuser.me/api/portraits/men/38.jpg',
+      name: 'Trudie Dooley' 
+    }
   },
   {
     id: uuidv4(),
@@ -73,7 +85,11 @@ const DoingTasks: task[] = [
         "title": "Define search filters",
         "isCompleted": false
       }
-    ]
+    ],
+    assignee: {
+      picture: 'https://randomuser.me/api/portraits/men/39.jpg',
+      name: 'Delta Bradtke'
+    }
   },
   {
     id: uuidv4(),
@@ -88,7 +104,11 @@ const DoingTasks: task[] = [
         "title": "Add auth endpoints",
         "isCompleted": false
       }
-    ]
+    ],
+    assignee: {
+      picture: 'https://randomuser.me/api/portraits/women/40.jpg',
+      name: 'Marisa Block'
+    }
   },
   {
     id: uuidv4(),
@@ -107,7 +127,11 @@ const DoingTasks: task[] = [
         "title": "Talk to potential customers about our proposed solution and ask for fair price expectancy",
         "isCompleted": false
       }
-    ]
+    ],
+    assignee: {
+      picture: 'https://randomuser.me/api/portraits/men/41.jpg',
+      name: 'Skye Rath'
+    }
   }
 ]
 

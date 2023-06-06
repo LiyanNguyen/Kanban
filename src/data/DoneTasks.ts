@@ -11,7 +11,11 @@ const DoneTasks: task[] = [
         "title": "Complete 5 wireframe prototype tests",
         "isCompleted": true
       }
-    ]
+    ],
+    assignee: {
+      picture: 'https://randomuser.me/api/portraits/men/32.jpg',
+      name: 'Henriette Balistreri' 
+    }
   },
   {
     id: uuidv4(),
@@ -22,7 +26,11 @@ const DoneTasks: task[] = [
         "title": "Create clickable wireframe prototype in Balsamiq",
         "isCompleted": true
       }
-    ]
+    ],
+    assignee: {
+      picture: 'https://randomuser.me/api/portraits/men/33.jpg',
+      name: 'Jaren Parisian'
+    }
   },
   {
     id: uuidv4(),
@@ -41,7 +49,11 @@ const DoneTasks: task[] = [
         "title": "Conduct 5 usability tests",
         "isCompleted": true
       }
-    ]
+    ],
+    assignee: {
+      picture: 'https://randomuser.me/api/portraits/women/34.jpg',
+      name: 'Jazmin Aufderhar'
+    }
   },
   {
     id: uuidv4(),
@@ -56,7 +68,11 @@ const DoneTasks: task[] = [
         "title": "Complete 10 usability tests",
         "isCompleted": true
       }
-    ]
+    ],
+    assignee: {
+      picture: 'https://randomuser.me/api/portraits/women/35.jpg',
+      name: 'Jewel Altenwerth'
+    }
   },
   {
     id: uuidv4(),
@@ -67,7 +83,11 @@ const DoneTasks: task[] = [
         "title": "Interview 10 prospective customers",
         "isCompleted": true
       }
-    ]
+    ],
+    assignee: {
+      picture: 'https://randomuser.me/api/portraits/men/36.jpg',
+      name: 'Cale Hills'
+    }
   },
   {
     id: uuidv4(),
@@ -82,7 +102,11 @@ const DoneTasks: task[] = [
         "title": "SWOT analysis for each competitor",
         "isCompleted": true
       }
-    ]
+    ],
+    assignee: {
+      picture: 'https://randomuser.me/api/portraits/men/37.jpg',
+      name: 'Fredy Satterfield'
+    }
   },
   {
     id: uuidv4(),
@@ -97,7 +121,11 @@ const DoneTasks: task[] = [
         "title": "Calculate TAM",
         "isCompleted": true
       }
-    ]
+    ],
+    assignee: {
+      picture: 'https://randomuser.me/api/portraits/men/38.jpg',
+      name: 'Trudie Dooley'
+    }
   }
 ]
 

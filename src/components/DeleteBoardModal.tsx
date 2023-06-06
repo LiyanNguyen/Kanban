@@ -1,7 +1,8 @@
-import { Modal, Typography, Stack, IconButton, Button, Theme, SxProps } from '@mui/material'
+import { Modal, Typography, Stack, IconButton, Button } from '@mui/material'
 import { Dispatch, SetStateAction } from 'react'
 import 'react-perfect-scrollbar/dist/css/styles.css';
 import CloseIcon from '@mui/icons-material/Close';
+import { modalStyle } from '../styles/modalStyle';
 
 type Props = {
   type: 'Board' | 'Task'
@@ -10,23 +11,13 @@ type Props = {
   setOpenModal: Dispatch<SetStateAction<boolean>>
 }
 
-const style: SxProps<Theme> = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: 480,
-  bgcolor: 'white',
-  borderRadius: 1.5
-};
-
 const DeleteBoardModal = (props: Props) => {
   const { type, itemName, openModal, setOpenModal } = props
 
 
   return (
     <Modal disableAutoFocus open={openModal} onClose={() => setOpenModal(false)}>
-      <Stack sx={style} p={4} gap={2}>
+      <Stack sx={modalStyle} p={4} gap={2}>
         <IconButton sx={{ position: 'absolute', top: 16, right: 16 }} onClick={() => setOpenModal(false)}>
           <CloseIcon />
         </IconButton>
