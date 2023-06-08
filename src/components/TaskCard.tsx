@@ -1,4 +1,4 @@
-import { Avatar, Box, Stack, Tooltip, Typography } from '@mui/material'
+import { Avatar, Stack, Tooltip, Typography } from '@mui/material'
 import { useState } from 'react'
 import { task } from '../types/task'
 import ViewTaskModal from './ViewTaskModal'

@@ -79,7 +79,7 @@ const CreateTaskModal = () => {
           helperText={error && 'Cannot be empty'}
         />
         <TextField
-          error={error} label='Description' multiline minRows={4} fullWidth variant="outlined" value={description}
+          error={error} label='Description' multiline minRows={3} maxRows={3} fullWidth variant="outlined" value={description}
           onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
             setDescription(event.target.value)
             setError(false)
@@ -110,7 +110,12 @@ const CreateTaskModal = () => {
             <TextField {...params} label='Assignee'/>
           )}
         />
-        <Divider sx={{mt: 1}}/>
+        <Divider sx={{ mt: 1 }} />
+        <Typography variant='subtitle2' color='#828FA3'>Status:&nbsp;
+          <span style={{ color: '#49C4E5', fontWeight: 'bold' }}>
+            Todo
+          </span>
+        </Typography>
         <Stack direction='row' gap={2} justifyContent='center'>
           <Button
             disabled={title === '' || selectedUser === null ? true : false}
