@@ -49,7 +49,7 @@ const Column = (props: Props) => {
       <Droppable droppableId={columnID} key={columnID}>
         {(provided, snapshot) =>
           <>
-            <Stack bgcolor={snapshot.isDraggingOver ? '#E9EFFA' : 'none'} ref={provided.innerRef} {...provided.droppableProps} sx={style}>
+            <Stack bgcolor={snapshot.isDraggingOver ? '#E4EBFA' : 'none'} ref={provided.innerRef} {...provided.droppableProps} sx={style} >
               {column.tasks.map((item: task, index: number) =>
                 <Draggable key={item.id} index={index} draggableId={item.id}>
                   {(provided, snapshot) =>

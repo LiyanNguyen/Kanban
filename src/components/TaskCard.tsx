@@ -1,7 +1,9 @@
-import { Avatar, Stack, Typography } from '@mui/material'
+import { Avatar, Box, Stack, Tooltip, Typography } from '@mui/material'
 import { useState } from 'react'
 import { task } from '../types/task'
 import ViewTaskModal from './ViewTaskModal'
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
 
 type Props = {
   columnName: string
@@ -23,7 +25,7 @@ const TaskCard = (props: Props) => {
         onClick={() => setOpen(true)}
         sx={{ cursor: 'grab', opacity: isDragging? 0.75 : 1 }}
         px={2} py={3} bgcolor='white' borderRadius={1} mb={2}
-        boxShadow={'0px 4px 6px rgba(54, 78, 126, 0.101545)'}
+        boxShadow={'0px 4px 6px 2px rgba(54, 78, 126, 0.151545)'}
         gap={0.5}
       >
         <Typography
@@ -38,6 +40,16 @@ const TaskCard = (props: Props) => {
         <Stack direction='row' gap={1} alignItems='center'>
           <Avatar src={data.assignee.picture} alt={data.assignee.name} sx={{ width: 28, height: 28 }} />
           <Typography color='#828FA3' variant='subtitle2'>{data.assignee.name}</Typography>
+          {isHovered &&
+            <Stack direction='row' alignItems='center' gap={0.5} marginLeft='auto'>
+              <Tooltip title="Click to View">
+                <VisibilityIcon fontSize='small' sx={{ color: '#828FA3' }} />
+              </Tooltip>
+              <Tooltip title="Hold to Drag">
+                <DragIndicatorIcon fontSize='small' sx={{ color: '#828FA3'}}/>
+              </Tooltip>
+            </Stack>
+          }
         </Stack>
       </Stack>
       <ViewTaskModal columnName={columnName} columnID={columnID} id={id} data={data} open={open} setOpen={setOpen} />

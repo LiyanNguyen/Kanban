@@ -61,40 +61,40 @@ const TodoTasks: task[] = [
       name: 'Jaren Parisian' 
     }
   },
-  {
-    id: uuidv4(),
-    "title": "Build UI for search",
-    "description": "",
-    "subtasks": [
-      {
-        "title": "Search page",
-        "isCompleted": false
-      }
-    ],
-    assignee: {
-      picture: 'https://randomuser.me/api/portraits/women/34.jpg',
-      name: 'Jazmin Aufderhar' 
-    }
-  },
-  {
-    id: uuidv4(),
-    "title": "Build settings UI",
-    "description": "",
-    "subtasks": [
-      {
-        "title": "Account page",
-        "isCompleted": false
-      },
-      {
-        "title": "Billing page",
-        "isCompleted": false
-      }
-    ],
-    assignee: {
-      picture: 'https://randomuser.me/api/portraits/women/35.jpg',
-      name: 'Jewel Altenwerth' 
-    }
-  },
+  // {
+  //   id: uuidv4(),
+  //   "title": "Build UI for search",
+  //   "description": "",
+  //   "subtasks": [
+  //     {
+  //       "title": "Search page",
+  //       "isCompleted": false
+  //     }
+  //   ],
+  //   assignee: {
+  //     picture: 'https://randomuser.me/api/portraits/women/34.jpg',
+  //     name: 'Jazmin Aufderhar' 
+  //   }
+  // },
+  // {
+  //   id: uuidv4(),
+  //   "title": "Build settings UI",
+  //   "description": "",
+  //   "subtasks": [
+  //     {
+  //       "title": "Account page",
+  //       "isCompleted": false
+  //     },
+  //     {
+  //       "title": "Billing page",
+  //       "isCompleted": false
+  //     }
+  //   ],
+  //   assignee: {
+  //     picture: 'https://randomuser.me/api/portraits/women/35.jpg',
+  //     name: 'Jewel Altenwerth' 
+  //   }
+  // },
 ]
 
 export default TodoTasks
