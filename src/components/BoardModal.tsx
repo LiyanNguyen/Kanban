@@ -40,7 +40,7 @@ const BoardModal = (props: Props) => {
     <Modal disableAutoFocus open={openModal} onClose={() => setOpenModal(false)}>
       <Stack sx={modalStyle} p={4} gap={2}>
         <Typography variant="h6" fontWeight='bold'>{boardName === undefined ? 'Create New' : 'Edit'}  Board</Typography>
-        <IconButton sx={{position: 'absolute', top: 16, right: 16}} onClick={() => setOpenModal(false)}>
+        <IconButton sx={{position: 'absolute', top: 8, right: 8}} onClick={() => setOpenModal(false)}>
           <CloseIcon/>
         </IconButton>
         <TextField
